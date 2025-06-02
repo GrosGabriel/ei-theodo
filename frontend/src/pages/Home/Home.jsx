@@ -6,7 +6,8 @@ import Movie from '../../components/Movie/Movie';
 import { useNavigate } from 'react-router-dom';
 
 function Home() {
-  const { movieName, setMovieName, filteredMovies, setMovies } = useFetchMovies();
+  const [optionFiltrage, setOptionFiltrage] = useState("test");
+  const { movieName, setMovieName, filteredMovies, setMovies } = useFetchMovies(optionFiltrage);
   const navigate = useNavigate();
 
   // Nombre de colonnes dans la grille
@@ -20,8 +21,8 @@ function Home() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Filmographie</h1>
-        <h2>Bienvenue sur la page d'accueil de l'application de gestion de filmographie</h2>
+        <h1 className = 'page-title'> Filmographie</h1>
+        <h2 className = 'page-subtitle'> Bienvenue sur la page d'accueil de l'application de gestion de filmographie</h2>
         <p>
           <input
             type="text"
@@ -29,8 +30,31 @@ function Home() {
             value={movieName}
             onChange={e => setMovieName(e.target.value)}
           />
-          {movieName}
+          {/*{movieName}*/}
+          <div className="dropdown-menu">
+            <button className="dropdown-btn">Filtres</button>
+            <div className="dropdown-content">
+              <a href="#option2" onClick={()=>setOptionFiltrage("Option1")}>Option 1</a>
+              <a href="#option2" onClick={()=>setOptionFiltrage("Option2")}>Option 2</a>
+              <a href="#option3" onClick={()=>setOptionFiltrage("Option3")}>Option 3</a>
+            </div>
+          </div>
         </p>
+        <div className="remarque-col">
+        <span className="remarque">
+          Recommandations classées par {optionFiltrage}
+        </span>
+        {optionFiltrage !== "Option1" && (
+          <button
+            className="close-btn"
+            onClick={() => setOptionFiltrage("Option1")}
+            title="Réinitialiser le filtre"
+          >
+            &times;
+          </button>
+          )}
+        </div>
+
         <ul className="movie-list">
           {filteredMovies.map((movie) => (
             <li
