@@ -3,7 +3,7 @@
   grid-template-columns: repeat(5, 1fr);
   gap: 32px;
   justify-items: center;
-  align-items: stretch;
+  align-items: start; /* <-- Important : évite l'étirement vertical */
   padding: 32px 0 0 0;
   list-style: none;
   background: #0d0d0d;
@@ -15,9 +15,8 @@
   border-radius: 18px;
   box-shadow: 0 4px 16px rgba(218,165,32,0.10);
   width: 210px;
-  min-height: 410px;
+  height: 410px; /* <-- Hauteur fixe */
   max-width: 210px;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -32,9 +31,8 @@
 .movie-card-flip {
   perspective: 1000px;
   width: 210px;
-  min-height: 410px;
+  height: 410px; /* <-- Hauteur fixe */
   max-width: 210px;
-  height: 100%;
 }
 
 .movie-card-inner {
@@ -117,7 +115,28 @@
 }
 
 .movie-synopsis {
-  font-size: 0.75em;
+  font-size: 0.60em;
   color: #fff;
   margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 6;      /* Limite à 4 lignes, ajuste selon la hauteur de ta carte */
+  -webkit-box-orient: vertical;
+  line-height: 1.3em;
+  max-height: 7.8em;          /* 4 lignes x 1.3em */
+}
+
+.movie-placeholder {
+  width: 210px;
+  height: 410px;
+  max-width: 210px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  pointer-events: none;
+  /* Pour éviter tout décalage visuel */
+  visibility: hidden;
+  margin: 0;
+  padding: 0;
 }

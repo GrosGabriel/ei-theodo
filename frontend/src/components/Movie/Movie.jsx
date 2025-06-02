@@ -13,7 +13,7 @@ function Movie({ movie }) {
 
   // Début du synopsis
   const synopsis = movie.overview
-    ? movie.overview.slice(0, 80) + (movie.overview.length > 80 ? '...' : '')
+    ? movie.overview
     : 'Pas de synopsis.';
 
   return (
@@ -28,7 +28,7 @@ function Movie({ movie }) {
         </div>
         <div className="movie-card movie-card-back">
           <div className="movie-info-back">
-            <h4 className="movie-genre">{genres}</h4>
+            <h4 className="movie-title">{movie.title}</h4>
             <p className="movie-synopsis">{synopsis}</p>
           </div>
         </div>
