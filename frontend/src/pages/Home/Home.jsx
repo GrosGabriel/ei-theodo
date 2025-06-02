@@ -22,27 +22,33 @@ function Home() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1 className = 'page-title'> Filmographie</h1>
-        <img src={centraleLogo} alt="CentraleSupélec" className="centrale-logo-spin" />
-        <h2 className = 'page-subtitle'> Bienvenue sur la page d'accueil de l'application de gestion de filmographie</h2>
-        <p>
+        <h1 className = 'page-title'> A la recherche de votre prochain coup de coeur ?</h1>
+        
+       
+              <div className="search-bar">
           <input
             type="text"
             placeholder="Rechercher un film..."
+            className="search-input"
             value={movieName}
             onChange={e => setMovieName(e.target.value)}
           />
-          {/*{movieName}*/}
           <div className="dropdown-menu">
-            
-            <button className="dropdown-btn">Filtres</button>
+            <button className="dropdown-btn">
+              Filtres
+              <span className="dropdown-arrow" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="#888" style={{display: 'block'}}>
+                  <path d="M5 8l5 5 5-5" stroke="#888" strokeWidth="2" fill="none" strokeLinecap="round"/>
+                </svg>
+              </span>
+            </button>
             <div className="dropdown-content">
               <a href="#option2" onClick={()=>setOptionFiltrage("Option1")}>Option 1</a>
               <a href="#option2" onClick={()=>setOptionFiltrage("Option2")}>Option 2</a>
               <a href="#option3" onClick={()=>setOptionFiltrage("Option3")}>Option 3</a>
             </div>
           </div>
-        </p>
+        </div>
         <div className="remarque-col">
         <span className="remarque">
           Recommandations classées par {optionFiltrage}
@@ -60,7 +66,7 @@ function Home() {
 
        
       </header>
-
+<div classname="body-container">
      <ul className={`movie-list${filteredMovies.length === 0 ? ' empty' : ''}`}>
           {filteredMovies.length === 0 ? (
             <li className="no-movie-message">
@@ -84,6 +90,7 @@ function Home() {
             </>
           )}
         </ul>
+        </div>
       
     </div>
   );

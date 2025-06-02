@@ -1,9 +1,13 @@
 .Header-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  padding: 5px;
-  font-size: calc(10px + 2vmin);
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  width: 10%;
+  z-index: 1000;
+  background-color: #282c34a8;
+  text-align: justify;
+  font-weight: 700;
+  
 }
 
 .Header-container > :not(:last-child) {
@@ -11,6 +15,7 @@
 }
 
 .Link {
-  font-weight: 700;
+  font-weight: 400;
   color: white;
+  text-decoration: none;
 }

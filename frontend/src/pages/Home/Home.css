@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  padding-top: 80px; /* Ajuste selon la nouvelle hauteur du header */
+  padding-top: 120px; /* Ajuste selon la nouvelle hauteur du header */
 }
 
 .App-logo {
@@ -16,12 +16,13 @@
 
 .App-header {
   position: fixed;
-  top: 0;
+  top: 0px;
   left: 0;
   width: 100%;
   z-index: 100;
-  background-color: #c79e22;
-  padding: 10px 0;         /* Réduit l'espace vertical */
+  
+  background-color: #282c34a8;
+  padding: 5px 0;         /* Réduit l'espace vertical */
   min-height: 60px;        /* Hauteur minimale plus petite */
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
@@ -62,32 +63,75 @@
 
 }
 
+.search-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  margin: 20px auto 18px auto; 
+  
+  max-width: 500px;      /* Ajuste la largeur totale du bloc centré */
+  width: 100%;           /* Prend toute la largeur possible */
+}
 
+
+.search-input,
+.dropdown-btn {
+  
+  height: 40px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background: #f9fafb;
+  padding: 0 16px;
+  box-sizing: border-box;
+  border-radius: 20px;
+  
+}
+.search-input {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 250px;      /* Largeur max de l'input */
+}
 
 .dropdown-menu {
   position: relative;
-  display: inline-block;
-  margin-top: 5px;
+  display: block;
+}
+.dropdown-btn {
+  min-width: 250px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: #888; 
+  justify-content: space-between;
 }
 
-.dropdown-btn {
-  background-color: #145783;
-  color: white;
-  padding: 4px 16px;
-  border: none;
-  cursor: pointer;
+.dropdown-arrow {
+  font-size: 18px;
+  margin-left: 8px;
+  transition: transform 0.2s;
+  color: rgb(17, 5, 5);
+}
+
+/* Rotation de la flèche quand le menu est ouvert */
+.dropdown-menu:hover .dropdown-arrow {
+  transform: rotate(180deg);
 }
 
 .dropdown-content {
   display: none;
   position: absolute;
   background-color: #f9f9f9;
-  min-width: 300px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  
-  z-index: 1;
-  font-size: 14px;
 
+  min-width: 200px;
+  box-shadow: 0px 8px 10px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  
+  left: 10%;      /* <-- Ajoute cette ligne */
+  right: unset; /* <-- Ajoute cette ligne pour annuler le right précédent */
+  margin-left: 0;
 }
 
 .dropdown-menu:hover .dropdown-content {
@@ -96,23 +140,13 @@
 
 .dropdown-content a {
   color: black;
-  padding: 12px 10px;
+  padding: 5px 3px;
   text-decoration: none;
   display: block;
 }
 
 .dropdown-content a:hover {
   background-color: #f1f1f1;
-}
-
-
-.centrale-logo-spin {
-  width: 36px;
-  height: 36px;
-  margin-right: 12px;
-  vertical-align: middle;
-  animation: spin 2s linear infinite;
-  display: inline-block;
 }
 
 @keyframes spin {
@@ -122,11 +156,16 @@
 }
 
 .page-title {
-  font-size: 1.3em;        /* Plus petit */
+  font-size: 40px;        /* Plus petit */
   margin: 0;
 }
 
 .page-subtitle {
   font-size: 0.9em;        /* Plus petit */
   margin: 0;
+}
+.body-container{
+  position: relative;
+  padding: 20px;
+  
 }

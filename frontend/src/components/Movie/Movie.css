@@ -6,7 +6,7 @@
   align-items: start; /* <-- Important : évite l'étirement vertical */
   padding: 32px 0 0 0;
   list-style: none;
-  background: #0d0d0d;
+  background: #1b1a1d;
   min-height: 100vh;
 }
 
