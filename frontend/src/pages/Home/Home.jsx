@@ -23,6 +23,7 @@ function Home() {
     <div className="App">
       <header className="App-header">
         <h1 className = 'page-title'> Filmographie</h1>
+        <img src={centraleLogo} alt="CentraleSupélec" className="centrale-logo-spin" />
         <h2 className = 'page-subtitle'> Bienvenue sur la page d'accueil de l'application de gestion de filmographie</h2>
         <p>
           <input
@@ -33,7 +34,7 @@ function Home() {
           />
           {/*{movieName}*/}
           <div className="dropdown-menu">
-            <img src={centraleLogo} alt="CentraleSupélec" className="centrale-logo-spin" />
+            
             <button className="dropdown-btn">Filtres</button>
             <div className="dropdown-content">
               <a href="#option2" onClick={()=>setOptionFiltrage("Option1")}>Option 1</a>

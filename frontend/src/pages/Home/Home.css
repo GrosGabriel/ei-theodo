@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  padding-top: 80px; /* Ajuste selon la nouvelle hauteur du header */
 }
 
 .App-logo {
@@ -20,6 +21,9 @@
   width: 100%;
   z-index: 100;
   background-color: #c79e22;
+  padding: 10px 0;         /* Réduit l'espace vertical */
+  min-height: 60px;        /* Hauteur minimale plus petite */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
 .App-link {
@@ -46,9 +50,7 @@
 .remarque-col {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
- 
-  
+  justify-content: center; /* <-- Centrage horizontal */
 }
 .close-btn {
   background: transparent;
@@ -117,4 +119,14 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+.page-title {
+  font-size: 1.3em;        /* Plus petit */
+  margin: 0;
+}
+
+.page-subtitle {
+  font-size: 0.9em;        /* Plus petit */
+  margin: 0;
 }
