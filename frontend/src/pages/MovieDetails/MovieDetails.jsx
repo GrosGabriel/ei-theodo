@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import './MovieDetails.css';
 
 function MovieDetails() {
   const { id } = useParams();
@@ -17,18 +18,22 @@ function MovieDetails() {
       .then((res) => setMovie(res.data));
   }, [id]);
 
-  if (!movie) return <div>Chargement...</div>;
+  if (!movie) return <div className="movie-details-container">Chargement...</div>;
 
   return (
-    <div style={{background: "#222", color: "#ffd700", padding: "24px", borderRadius: "12px", margin: "32px auto", maxWidth: "600px"}}>
-      <h2>{movie.title}</h2>
+    <div className="movie-details-container">
+      <h2 className="movie-details-title">{movie.title}</h2>
       <img
+        className="movie-details-poster"
         src={movie.poster_path ? `https://image.tmdb.org/t/p/w300${movie.poster_path}` : 'https://via.placeholder.com/300x450?text=No+Image'}
         alt={movie.title}
-        style={{width: "200px", borderRadius: "8px", marginBottom: "16px"}}
       />
-      <p><strong>Date de sortie :</strong> {movie.release_date}</p>
-      <p><strong>Résumé :</strong> {movie.overview}</p>
+      <p className="movie-details-info">
+        <span className="movie-details-label">Date de sortie :</span> {movie.release_date}
+      </p>
+      <p className="movie-details-info">
+        <span className="movie-details-label">Résumé :</span> {movie.overview}
+      </p>
     </div>
   );
 }
