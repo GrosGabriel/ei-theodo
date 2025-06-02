@@ -20,9 +20,9 @@
   left: 0;
   width: 100%;
   z-index: 100;
-  background-color: #c79e22;
-  padding: 10px 0;         /* Réduit l'espace vertical */
-  min-height: 60px;        /* Hauteur minimale plus petite */
+  background-color: #ffd700; /* même couleur que la police des titres */
+  padding: 10px 0;
+  min-height: 60px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
