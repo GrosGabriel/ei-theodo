@@ -57,7 +57,10 @@ function Home() {
           )}
         </div>
 
-        <ul className={`movie-list${filteredMovies.length === 0 ? ' empty' : ''}`}>
+       
+      </header>
+
+     <ul className={`movie-list${filteredMovies.length === 0 ? ' empty' : ''}`}>
           {filteredMovies.length === 0 ? (
             <li className="no-movie-message">
               Aucun film ne correspond à la recherche.
@@ -80,7 +83,6 @@ function Home() {
             </>
           )}
         </ul>
-      </header>
       
     </div>
   );
