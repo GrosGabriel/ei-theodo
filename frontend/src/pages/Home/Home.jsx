@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useFetchMovies } from './useFetchMovie';
 import Movie from '../../components/Movie/Movie';
 import { useNavigate } from 'react-router-dom';
+import centraleLogo from '../../../public/Ecole_Centrale_Supelec.svg' ; // Assurez-vous que le chemin d'importation est correct
 
 function Home() {
   const [optionFiltrage, setOptionFiltrage] = useState("test");
@@ -32,6 +33,7 @@ function Home() {
           />
           {/*{movieName}*/}
           <div className="dropdown-menu">
+            <img src={centraleLogo} alt="CentraleSupélec" className="centrale-logo-spin" />
             <button className="dropdown-btn">Filtres</button>
             <div className="dropdown-content">
               <a href="#option2" onClick={()=>setOptionFiltrage("Option1")}>Option 1</a>
@@ -55,22 +57,31 @@ function Home() {
           )}
         </div>
 
-        <ul className="movie-list">
-          {filteredMovies.map((movie) => (
-            <li
-              key={movie.id}
-              onClick={() => navigate(`/movie/${movie.id}`)}
-              style={{ cursor: "pointer" }}
-            >
-              <Movie movie={movie} />
+        <ul className={`movie-list${filteredMovies.length === 0 ? ' empty' : ''}`}>
+          {filteredMovies.length === 0 ? (
+            <li className="no-movie-message">
+              Aucun film ne correspond à la recherche.
             </li>
-          ))}
-          {/* Ajoute des placeholders pour compléter la ligne */}
-          {Array.from({ length: placeholders }).map((_, idx) => (
-            <li key={`placeholder-${idx}`} className="movie-placeholder" />
-          ))}
+          ) : (
+            <>
+              {filteredMovies.map((movie) => (
+                <li
+                  key={movie.id}
+                  onClick={() => navigate(`/movie/${movie.id}`)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <Movie movie={movie} />
+                </li>
+              ))}
+              {/* Ajoute des placeholders pour compléter la ligne */}
+              {Array.from({ length: placeholders }).map((_, idx) => (
+                <li key={`placeholder-${idx}`} className="movie-placeholder" />
+              ))}
+            </>
+          )}
         </ul>
       </header>
+      
     </div>
   );
 }

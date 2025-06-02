@@ -14,7 +14,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #c79e22;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -32,6 +32,90 @@
     transform: rotate(0deg);
   }
   to {
+    transform: rotate(360deg);
+  }
+}
+
+
+
+.remarque{
+  font-size: 12px;
+  color: rgb(128, 115, 98);
+}
+
+
+.remarque-col {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+ 
+  
+}
+.close-btn {
+  background: transparent;
+  border: none;
+  font-size:13px;
+  color: rgb(128, 115, 98);
+  margin-bottom :0;
+  cursor: pointer;
+
+}
+
+
+
+.dropdown-menu {
+  position: relative;
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.dropdown-btn {
+  background-color: #145783;
+  color: white;
+  padding: 4px 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 300px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  
+  z-index: 1;
+  font-size: 14px;
+
+}
+
+.dropdown-menu:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 10px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+
+.centrale-logo-spin {
+  width: 36px;
+  height: 36px;
+  margin-right: 12px;
+  vertical-align: middle;
+  animation: spin 2s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  100% {
     transform: rotate(360deg);
   }
 }
