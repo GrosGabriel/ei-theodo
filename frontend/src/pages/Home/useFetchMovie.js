@@ -5,7 +5,7 @@ import axios from 'axios';
 export function useFetchMovies() {
     const [movieName, setMovieName] = useState('');
     const [movies, setMovies] = useState([]);
-  // const [fetchMovies, setFetchMovies] = useFetchMovies(false);
+
 
   // useEffect pour charger les films populaires au montage du composant
   useEffect(() => {
@@ -20,10 +20,12 @@ export function useFetchMovies() {
       .then((response) => {
         console.log('Réponse API:', response.data);
         setMovies(response.data.results.slice(0, 10)); // Limiter à 10 films
+       // setMovies(response.data.results);   //ne pas limiter à 10 films
       })
       .catch((error) => {
         console.log('Erreur API:', error);
       });
   }, []); // [] = exécuter une seule fois au montage
-  return { movieName,setMovieName, movies, setMovies  };
+  return { movieName,setMovieName, filteredMovies: movies.filter(movie =>
+    movie.title.toLowerCase().includes(movieName.toLowerCase())), setMovies  };
 }

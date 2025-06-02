@@ -1,85 +1,199 @@
-/* Liste des films en flex, style moderne */
+/* Grille des films */
 .movies-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  gap: 28px;
+  align-items: flex-start;
+  gap: 70px 40px; /* 70px vertical, 40px horizontal */
   list-style: none;
   padding: 0;
   margin: 40px 0 0 0;
   background: #181818;
+  min-height: 710px; /* 2 lignes de 340px + 1 gap de 70px */
+  max-width: calc(5 * 210px + 4 * 40px); /* 5 cartes de 210px + 4 gaps de 40px */
+  width: 100%;
+  border-radius: 24px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.18);
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* Pour que chaque film prenne 1/5 de la largeur (moins le gap) */
 .movies-list li {
-  flex: 1 1 calc(20% - 28px);
-  max-width: calc(20% - 28px);
-  min-width: 180px;
+  flex: 0 0 150px;
+  max-width: 150px;
+  min-width: 150px;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   display: flex;
+  justify-content: center;
 }
 
-/* Chaque carte film */
-.movie-card {
+/* Flip card effect */
+.movie-card-flip {
+  perspective: 1000px;
+  width: 210px;
+  height: 340px;      /* Hauteur fixe pour chaque carte */
+  min-height: 340px;
+  max-width: 210px;
+}
+
+.movie-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(.4,2,.6,1);
+  transform-style: preserve-3d;
+}
+
+.movie-card-flip:hover .movie-card-inner {
+  transform: rotateY(180deg);
+}
+
+.movie-card-front, .movie-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 18px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Face avant de la carte */
+.movie-card-front {
   background: #232323;
   color: #fff;
-  border-radius: 18px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.18);
-  margin: 0;
   padding: 18px 18px 14px 18px;
-  width: 200px;
-  min-height: 340px;
-  transition: transform 0.18s, box-shadow 0.18s;
-  position: relative;
-  overflow: hidden;
   border: 2px solid transparent;
+  transition: border 0.18s, box-shadow 0.18s, background 0.18s;
 }
 
-.movie-card:hover {
-  transform: translateY(-6px) scale(1.04);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.28);
+.movie-card-flip:hover .movie-card-front {
+  border: 2.5px solid #b4961f;
   background: #282828;
-  border: 2.5px solid #b4961f; /* Jaune doré */
+  box-shadow: 0 8px 32px rgba(0,0,0,0.28);
 }
 
-.movie-card img {
-  width: 164px;
-  height: 246px;
+/* Face arrière de la carte */
+.movie-card-back {
+  background: linear-gradient(135deg, #111 60%, #1a1a1a 100%);
+  color: #ffd700;
+  transform: rotateY(180deg);
+  box-shadow: 0 4px 16px rgba(218,165,32,0.10);
+  padding: 18px 10px 16px 10px;
+}
+
+.movie-poster {
+  width: 100%;
+  height: 300px;
   object-fit: cover;
   border-radius: 12px;
   margin-bottom: 18px;
-  background: #222;
-  align-self: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  box-shadow: 0 2px 8px rgba(218,165,32,0.10);
+  background: #23272f;
 }
 
-.movie-card h3 {
-  margin: 0 0 6px 0;
+.movie-info {
+  text-align: center;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  
+}
+
+.movie-title {
   font-size: 1.08rem;
   font-weight: 600;
+  color: #ffd700;
+  margin: 0 0 8px 0;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px #0008;
+}
+
+.movie-date {
+  color: #b3b3b3;
+  font-size: 0.97rem;
+  font-weight: 500;
+  margin: 0;
+  letter-spacing: 0.2px;
+}
+
+.movie-info-back {
+  text-align: center;
+}
+
+.movie-genre {
+  font-size: 0.85em;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #ffd700;
+}
+
+.movie-synopsis {
+  font-size: 0.45em;
   color: #fff;
-  text-align: left;
-  white-space: nowrap;
+  margin: 0;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 100%;
+  display: -webkit-box;
+  -webkit-line-clamp: 6;      /* Limite à 4 lignes, ajuste selon la hauteur de ta carte */
+  -webkit-box-orient: vertical;
+  line-height: 1.3em;
+  max-height: 7.8em;          /* 4 lignes x 1.3em */
 }
 
-.movie-card p {
-  margin: 0;
-  font-size: 0.97rem;
-  color: #b3b3b3;
-  text-align: left;
-  width: 100%;
-  letter-spacing: 0.01em;
+/* Message aucun film */
+.movies-list.empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 720px;
 }
 
-/* Supprime l'effet "étiquette marron" en haut à gauche en retirant le ::after */
-.movie-card::after {
-  display: none;
+.no-movie-message {
+  color: #fff;
+  width: 100%;
+  text-align: center;
+  list-style: none;
+  font-size: 1.2rem;
+  padding: 0;
+  display: block;
+}
+
+/* Flèches navigation */
+.arrows-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  margin-top: 16px;
+  min-height: 40px;
+}
+
+.arrow {
+  background: #232323;
+  color: #FFD700;
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+}
+
+.arrow:hover {
+  background: #FFD700;
+  color: #232323;
+  transform: scale(1.12);
 }
