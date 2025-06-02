@@ -24,5 +24,5 @@ export function useFetchMovies() {
         console.log('Erreur API:', error);
       });
   }, []); // [] = exécuter une seule fois au montage
-  return { movieName,setMovieName, movies,setMovies, useEffect };
+  return { movieName,setMovieName, filteredMovies: movies.filter(movie=>movie.title.toLowerCase().includes(movieName.toLowerCase())) ,setMovies };
 }

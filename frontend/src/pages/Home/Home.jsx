@@ -6,7 +6,7 @@ import Movie from '../../components/Movie/Movie';
 import { useNavigate } from 'react-router-dom'; // <-- Ajout
 
 function Home() {
-  const {movieName,setMovieName, movies,setMovies } = useFetchMovies();
+  const {movieName,setMovieName, filteredMovies,setMovies } = useFetchMovies();
   const navigate = useNavigate(); // <-- Ajout
 
   return (
@@ -24,7 +24,7 @@ function Home() {
           {movieName}
         </p> 
         <ul className="movie-list">
-          {movies.map((movie) => (
+          {filteredMovies.map((movie) => (
             <li
               key={movie.id}
               onClick={() => navigate(`/movie/${movie.id}`)} // <-- Navigue vers la page de détails
