@@ -66,7 +66,7 @@ function AddUserForm({ onSuccessfulUserCreation }) {
           placeholder="Last name"
           value={formValues.lastname}
           onChange={(event) =>
-            setFormValues({ ...formValues, lastname: event.target.value })
+            setFormValues({ ...formValues, lastname: event  .target.value })
           }
         />
         <button className="add-user-button" type="submit">
