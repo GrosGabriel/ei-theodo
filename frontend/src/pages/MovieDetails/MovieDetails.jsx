@@ -7,7 +7,7 @@ function MovieDetails() {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
   const [movieRating, setMovieRating] = useState(0);
-
+  
   useEffect(() => {
     axios
       .get(`https://api.themoviedb.org/3/movie/${id}?language=en-US`, {
@@ -36,17 +36,33 @@ function MovieDetails() {
         <span className="movie-details-label">Résumé :</span> {movie.overview}
       </p>
       <div className='like-dislike'>
-     <button  className="like_button" onClick={()=>setMovieRating(1)}>
-        Like
+     <button  className="like_button" onClick={()=>setMovieRating(0)}>
+        0
             
       </button>
-      <button className="like_button" onClick={()=>setMovieRating(-1)}>
-        Dislike
+      <button className="like_button" onClick={()=>setMovieRating(1)}>
+        1
+            
+      </button>
+      <button className="like_button" onClick={()=>setMovieRating(2)}>
+        2
+            
+      </button>
+      <button className="like_button" onClick={()=>setMovieRating(3)}>
+        3
+            
+      </button>
+      <button className="like_button" onClick={()=>setMovieRating(4)}>
+        4
+            
+      </button>
+      <button className="like_button" onClick={()=>setMovieRating(5)}>
+        5
             
       </button>
      
       </div>
-       Note attribuée {movieRating === 0 ? "Aucune note" : movieRating > 0 ? "👍" : "👎"}
+       Note attribuée {movieRating}/5
       </div>
   );
 }
