@@ -7,7 +7,33 @@ function MovieDetails() {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
   const [movieRating, setMovieRating] = useState(0);
-  
+
+  async function getUserIdByEmail(email) {
+    const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/search?email=${email}`);
+    if (res.data && res.data.users && res.data.users.length > 0) {
+      return res.data.users[0].id;
+    }
+    return null;
+  }
+
+  async function saveNote(rating) {
+    const email = localStorage.getItem('savedEmail');
+    if (!email) {
+      alert("Vous devez être connecté pour noter un film.");
+      return;
+    }
+    const userId = await getUserIdByEmail(email);
+    if (!userId) {
+      alert("Utilisateur non trouvé.");
+      return;
+    }
+    await axios.post(`${import.meta.env.VITE_BACKEND_URL}/notes/new`, {
+      userid: userId,
+      filmid: id,
+      note: rating
+    });
+  }
+
   useEffect(() => {
     axios
       .get(`https://api.themoviedb.org/3/movie/${id}?language=en-US`, {
@@ -36,35 +62,18 @@ function MovieDetails() {
         <span className="movie-details-label">Résumé :</span> {movie.overview}
       </p>
       <div className='like-dislike'>
-     <button  className="like_button" onClick={()=>setMovieRating(0)}>
-        0
-            
-      </button>
-      <button className="like_button" onClick={()=>setMovieRating(1)}>
-        1
-            
-      </button>
-      <button className="like_button" onClick={()=>setMovieRating(2)}>
-        2
-            
-      </button>
-      <button className="like_button" onClick={()=>setMovieRating(3)}>
-        3
-            
-      </button>
-      <button className="like_button" onClick={()=>setMovieRating(4)}>
-        4
-            
-      </button>
-      <button className="like_button" onClick={()=>setMovieRating(5)}>
-        5
-            
-      </button>
-      
-     
+        {[0,1,2,3,4,5].map((n) => (
+          <button
+            key={n}
+            className="like_button"
+            onClick={() => { setMovieRating(n); saveNote(n); }}
+          >
+            {n}
+          </button>
+        ))}
       </div>
-       Note attribuée {movieRating}/5
-      </div>
+      Note attribuée {movieRating}/5
+    </div>
   );
 }
 
