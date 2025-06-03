@@ -1,20 +1,62 @@
+.add-user-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  background: #23232b;
+  padding: 24px 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(218,165,32,0.10);
+  margin-bottom: 24px;
+  align-items: flex-end;
+  justify-content: center;
+}
+
 .add-user-form > :not(:last-child) {
   margin-right: 10px;
 }
 
 .add-user-input {
-  padding: 5px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #ffd70055;
+  background: #181818;
+  color: #ffd700;
+  font-size: 1em;
+  min-width: 160px;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.add-user-input:focus {
+  border: 1.5px solid #ffd700;
+  background: #23232b;
 }
 
 .add-user-button {
+  background: #ffd700;
+  color: #23232b;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-weight: 700;
+  font-size: 1em;
   cursor: pointer;
-  padding: 5px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.add-user-button:hover {
+  background: #fffbe6;
+  color: #bfa100;
 }
 
 .user-creation-success {
-  color: green;
+  color: #00e676;
+  margin-top: 10px;
+  font-weight: 600;
 }
 
 .user-creation-error {
-  color: red;
+  color: #ff5252;
+  margin-top: 10px;
+  font-weight: 600;
 }

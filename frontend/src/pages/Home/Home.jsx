@@ -66,7 +66,7 @@ function Home() {
 
        
       </header>
-<div classname="body-container">
+<div className="body-container">
      <ul className={`movie-list${filteredMovies.length === 0 ? ' empty' : ''}`}>
           {filteredMovies.length === 0 ? (
             <li className="no-movie-message">
@@ -95,7 +95,7 @@ function Home() {
       <footer>
         <div className='logo-noms'>
           <div className='logo'>
-        <img src={centraleLogo} alt="Ecole_Centrale_Supelec.svp" className="centrale-logo" />
+        <img src={centraleLogo} alt="Ecole_Centrale_Supelec.svg" className="centrale-logo" /> 
       </div>
         <div className='noms'>
         CentraleSupélec, ST4 EI no.3 : <br></br>

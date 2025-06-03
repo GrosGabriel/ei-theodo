@@ -1,12 +1,23 @@
 import axios from 'axios';
 import './MoviesTable.css';
 
-function MoviesTable({ movies, onSuccessfulMovieDeletion }) {
+function MoviesTable({ movies, filters, onSuccessfulMovieDeletion }) {
   const deleteMovie = (movieId) => {
     axios
       .delete(`${import.meta.env.VITE_BACKEND_URL}/movies/${movieId}`)
       .then(() => onSuccessfulMovieDeletion());
   };
+
+  // Filtrage des films selon les filtres reçus
+  const filteredMovies = movies.filter((movie) => {
+    return (
+      (!filters.title || !movie.title || movie.title.toLowerCase().includes(filters.title.toLowerCase())) &&
+      (!filters.year || !movie.year || String(movie.year).includes(filters.year)) &&
+      (!filters.director || !movie.director || movie.director.toLowerCase().includes(filters.director.toLowerCase())) &&
+      (!filters.genre || !movie.genre || movie.genre.toLowerCase().includes(filters.genre.toLowerCase())) &&
+      (!filters.synopsis || !movie.synopsis || movie.synopsis.toLowerCase().includes(filters.synopsis.toLowerCase()))
+    );
+  });
 
   return (
     <div>
@@ -22,7 +33,7 @@ function MoviesTable({ movies, onSuccessfulMovieDeletion }) {
           </tr>
         </thead>
         <tbody>
-          {movies.map((movie) => (
+          {filteredMovies.map((movie) => (
             <tr key={movie.id}>
               <td>{movie.title}</td>
               <td>{movie.year}</td>
