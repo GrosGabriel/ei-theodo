@@ -178,9 +178,15 @@
   justify-content: center;
   gap: 10px;
   font-size: 10px;
+  text-decoration: none;
 }
 .noms{
   text-align: justify;
+  text-decoration: none;
+}
+.noms a {
+  color: white;
+  text-decoration: none;
 }
 .logo {
  
