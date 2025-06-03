@@ -91,7 +91,21 @@ function Home() {
           )}
         </ul>
         </div>
-      
+        <div className='bas-page'>
+      <footer>
+        <div className='logo-noms'>
+          <div className='logo'>
+        <img src={centraleLogo} alt="Ecole_Centrale_Supelec.svp" className="centrale-logo" />
+      </div>
+        <div className='noms'>
+        CentraleSupélec, ST4 EI no.3 : <br></br>
+        Gabriel Gros<br></br>
+        Gaetan Lechoux <br></br>
+        Romain Foucaud <br></br>
+        </div>
+        </div>
+      </footer>
+      </div>
     </div>
   );
 }
