@@ -7,6 +7,9 @@ import { routeNotFoundJsonHandler } from './services/routeNotFoundJsonHandler.js
 import { jsonErrorHandler } from './services/jsonErrorHandler.js';
 import { appDataSource } from './datasource.js';
 import moviesRouter from './routes/movies.js';
+
+
+
 appDataSource
   .initialize()
   .then(() => {

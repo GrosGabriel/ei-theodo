@@ -4,18 +4,38 @@ import Movie from '../entities/movie.js';
 
 const router = express.Router();
 
-router.get('/', function (req, res) {
-  console.log('GET /movies called');
-  res.json([]);
-});
 // router.get('/', function (req, res) {
-//   appDataSource
-//     .getRepository(Movie)
-//     .find({})
-//     .then(function (movies) {
-//       res.json({ movies: movies });
-//     });
+//   console.log('GET /movies called');
+//   res.json([]);
 // });
+
+router.get('/', function (req, res) {
+  appDataSource
+    .getRepository(Movie)
+    .find({})
+    .then(function (movies) {
+      res.json({ movies: movies });
+    });
+});
+
+
+router.get('/:movieId', function (req, res) {
+  appDataSource
+    .getRepository(Movie)
+    .findOneBy({ id: Number(req.params.movieId) })
+    .then(function (movie) {
+      if (movie) {
+        res.json(movie);
+      } else {
+        res.status(404).json({ message: 'Movie not found' });
+      }
+    })
+    .catch(function () {
+      res.status(500).json({ message: 'Error while fetching the movie' });
+    });
+});
+
+
 
 router.post('/new', function (req, res) {
   console.log(req.body);
