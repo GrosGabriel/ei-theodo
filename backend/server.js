@@ -7,7 +7,7 @@ import { routeNotFoundJsonHandler } from './services/routeNotFoundJsonHandler.js
 import { jsonErrorHandler } from './services/jsonErrorHandler.js';
 import { appDataSource } from './datasource.js';
 import moviesRouter from './routes/movies.js';
-
+import notesRoutes from './routes/notes.js';
 
 
 appDataSource
@@ -26,7 +26,7 @@ appDataSource
     app.use('/users', usersRouter);
 
     app.use("/movies", moviesRouter);
-
+    app.use('/notes', notesRoutes);
     // Register 404 middleware and error handler
     app.use(routeNotFoundJsonHandler); // this middleware must be registered after all routes to handle 404 correctly
     app.use(jsonErrorHandler); // this error handler must be registered after all middleware to catch all errors
