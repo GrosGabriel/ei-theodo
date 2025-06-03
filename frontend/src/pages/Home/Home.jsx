@@ -10,6 +10,10 @@ function Home() {
   const [optionFiltrage, setOptionFiltrage] = useState("Option 1");
   const { movieName, setMovieName, filteredMovies, setMovies } = useFetchMovies(optionFiltrage);
   const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [savedEmail, setSavedEmail] = useState('');
+  const [messageco, setmessageco] = useState('');
+  
 
   // Nombre de colonnes dans la grille
   const columns = 5;
@@ -21,10 +25,11 @@ function Home() {
 
   return (
     <div className="App">
+      
+   
       <header className="App-header">
         <h1 className = 'page-title'> A la recherche de votre prochain coup de coeur ?</h1>
         
-       
               <div className="search-bar">
           <input
             type="text"
@@ -48,7 +53,10 @@ function Home() {
               <a href="#option3" onClick={()=>setOptionFiltrage("Option3")}>Option 3</a>
             </div>
           </div>
+       
+       
         </div>
+
         <div className="remarque-col">
         <span className="remarque">
           Recommandations classées par {optionFiltrage}
@@ -63,6 +71,29 @@ function Home() {
           </button>
           )}
         </div>
+        <div className="connection">
+  <input
+    type="text"
+    placeholder="Entrer votre email"
+    className="email-input"
+    value={email}
+    onChange={e => setEmail(e.target.value)}
+  />
+  <button
+    className="validate-btn"
+    onClick={() => {
+      setSavedEmail(email); // stocke l'email
+      setEmail('');  
+      setmessageco("Vous êtes connecté.e en tant que ");       // vide l'input
+    }}
+  >
+  
+    Valider
+  </button>
+  
+</div>
+       <div className='message-co'>
+    {messageco}   {savedEmail} </div> 
 
        
       </header>
@@ -95,7 +126,7 @@ function Home() {
       <footer>
         <div className='logo-noms'>
           <div className='logo'>
-        <img src={centraleLogo} alt="Ecole_Centrale_Supelec.svg" className="centrale-logo" /> 
+        <img src={centraleLogo} alt="Ecole_Centrale_Supelec.svp" className="centrale-logo" />
       </div>
         <div className='noms'>
         CentraleSupélec, ST4 EI no.3 : <br></br>
