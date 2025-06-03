@@ -1,0 +1,11 @@
+.movies-table,
+.movies-table td,
+.movies-table th {
+  border-collapse: collapse;
+  border: 1px solid grey;
+}
+
+.movies-table td,
+.movies-table th {
+  padding: 10px;
+}
