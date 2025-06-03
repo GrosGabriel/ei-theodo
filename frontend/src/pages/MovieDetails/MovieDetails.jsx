@@ -60,6 +60,7 @@ function MovieDetails() {
         5
             
       </button>
+      
      
       </div>
        Note attribuée {movieRating}/5
