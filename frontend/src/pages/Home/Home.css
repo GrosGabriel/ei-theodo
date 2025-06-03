@@ -20,7 +20,7 @@
   left: 0;
   width: 100%;
   z-index: 100;
-  background-color: #282c34a8;
+  background-color: #282c34;
   padding: 10px 0;         /* Réduit l'espace vertical */
   min-height: 60px;        /* Hauteur minimale plus petite */
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
