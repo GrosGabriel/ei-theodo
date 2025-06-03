@@ -2,17 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import './AddMovieForm.css';
 
-const DEFAULT_FORM_VALUES = {
-  title: '',
-  year: '',
-  synopsis: '',
-  director: '',
-  genre: '',
-};
-
-function AddMovieForm({ onSuccessfulMovieCreation }) {
-  const [formValues, setFormValues] = useState(DEFAULT_FORM_VALUES);
-
+function AddMovieForm({ onSuccessfulMovieCreation, filters, setFilters }) {
   const [movieCreationError, setMovieCreationError] = useState(null);
   const [movieCreationSuccess, setMovieCreationSuccess] = useState(null);
 
@@ -26,14 +16,19 @@ function AddMovieForm({ onSuccessfulMovieCreation }) {
   const saveMovie = (event) => {
     // This avoid default page reload behavior on form submit
     event.preventDefault();
-
     setMovieCreationError(null);
 
     axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/movies/new`, formValues)
+      .post(`${import.meta.env.VITE_BACKEND_URL}/movies/new`, filters)
       .then(() => {
         displayCreationSuccessMessage();
-        setFormValues(DEFAULT_FORM_VALUES);
+        setFilters({
+          title: '',
+          year: '',
+          synopsis: '',
+          director: '',
+          genre: '',
+        });
         onSuccessfulMovieCreation();
       })
       .catch((error) => {
@@ -49,46 +44,32 @@ function AddMovieForm({ onSuccessfulMovieCreation }) {
           className="add-movie-input"
           required
           placeholder="Title"
-          value={formValues.title}
-          onChange={(event) =>
-            setFormValues({ ...formValues, title: event.target.value })
-          }
+          value={filters.title}
+          onChange={(e) => setFilters({ ...filters, title: e.target.value })}
         />
         <input
           className="add-movie-input"
-          required
           placeholder="Year"
-          value={formValues.year}
-          onChange={(event) =>
-            setFormValues({ ...formValues, year: event.target.value })
-          }
+          value={filters.year}
+          onChange={(e) => setFilters({ ...filters, year: e.target.value })}
         />
         <input
           className="add-movie-input"
-          required
           placeholder="Director"
-          value={formValues.director}
-          onChange={(event) =>
-            setFormValues({ ...formValues, director: event.target.value })
-          }
+          value={filters.director}
+          onChange={(e) => setFilters({ ...filters, director: e.target.value })}
         />
         <input
           className="add-movie-input"
-          required
           placeholder="Genre"
-          value={formValues.genre}
-          onChange={(event) =>
-            setFormValues({ ...formValues, genre: event.target.value })
-          }
+          value={filters.genre}
+          onChange={(e) => setFilters({ ...filters, genre: e.target.value })}
         />
         <input
           className="add-movie-input"
-          required
           placeholder="Synopsis"
-          value={formValues.synopsis}
-          onChange={(event) =>
-            setFormValues({ ...formValues, synopsis: event.target.value })
-          }
+          value={filters.synopsis}
+          onChange={(e) => setFilters({ ...filters, synopsis: e.target.value })}
         />
         <button className="add-movie-button" type="submit">
           Add movie

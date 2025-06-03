@@ -69,16 +69,19 @@ router.get('/:movieId', function (req, res) {
 
 
 
+
+
+
 router.post('/new', function (req, res) {
   console.log(req.body);
   // res.json(req.body);
   const movieRepository = appDataSource.getRepository(Movie);
   const newMovie = movieRepository.create({
     title: req.body.title,
-    year: req.body.year,
-    synopsis: req.body.synopsis,
-    director: req.body.director,
-    genre: req.body.genre,
+    year: req.body.year === '' ? null : req.body.year, // Handle empty string as null
+    synopsis: req.body.synopsis === '' ? null : req.body.synopsis, // Handle empty string as null
+    director: req.body.director === '' ? null : req.body.director, // Handle empty string as null
+    genre: req.body.genre === '' ? null : req.body.genre, // Handle empty string as null
 
   });
   movieRepository.insert(newMovie)
