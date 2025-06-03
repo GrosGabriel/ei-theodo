@@ -19,6 +19,35 @@ router.get('/', function (req, res) {
 });
 
 
+router.get('/search', function (req, res) {
+  const where = {};
+  if (req.query.id) where.id = req.query.id;
+  if (req.query.title) where.title = req.query.title;
+  if (req.query.director) where.director = req.query.director;
+  if (req.query.year) where.year = req.query.year;
+  if (req.query.genre) where.genre = req.query.genre;
+
+  // Nettoyage : supprimer les clés undefined
+  Object.keys(where).forEach(key => {
+    if (where[key] === undefined) {
+      delete where[key];
+    }
+  });
+  console.log('where =', where);
+  appDataSource
+    .getRepository(Movie)
+    .find({ where })
+    .then(function (movies) {
+      res.json({ movies });
+    })
+    .catch(function () {
+      res.status(500).json({ message: 'Error while searching for movies' });
+    });
+});
+
+
+//ATTENTION A GARDER /SEARCH AVANT /:MOVIEID
+
 router.get('/:movieId', function (req, res) {
   appDataSource
     .getRepository(Movie)
@@ -34,6 +63,9 @@ router.get('/:movieId', function (req, res) {
       res.status(500).json({ message: 'Error while fetching the movie' });
     });
 });
+
+
+
 
 
 

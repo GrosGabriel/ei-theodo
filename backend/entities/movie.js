@@ -10,6 +10,7 @@ const Movie = new typeorm.EntitySchema({
     },
     title: {
       type: String,
+      nullable: false,
     },
     director: { type: String, nullable: true },
     year: { type: String, nullable: true },

@@ -6,4 +6,4 @@ node_modules
 public
 
 # database
-database.sqlite3
+#database.sqlite3
