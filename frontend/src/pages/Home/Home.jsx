@@ -99,9 +99,9 @@ function Home() {
       </div>
         <div className='noms'>
         CentraleSupélec, ST4 EI no.3 : <br></br>
-        Gabriel Gros<br></br>
-        Gaetan Lechoux <br></br>
-        Romain Foucaud <br></br>
+        <a href="https://www.linkedin.com/in/gabrielgroslink" target="_blank">Gabriel Gros</a><br></br>
+       <a href="https://www.linkedin.com/in/ga%C3%ABtan-lechoux-7a4748333/" target="_blank">Gaetan Lechoux</a> <br></br>
+       <a href="https://www.linkedin.com/in/romain-foucaud" target="_blank">Romain Foucaud</a> <br></br>
         </div>
         </div>
       </footer>
