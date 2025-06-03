@@ -22,6 +22,14 @@ function Home() {
     filteredMovies.length > 0
       ? (columns - (filteredMovies.length % columns)) % columns
       : 0;
+    // 1. Charger l'email sauvegardé au montage du composant
+  useEffect(() => {
+    const emailFromStorage = localStorage.getItem('savedEmail');
+    if (emailFromStorage) {
+      setSavedEmail(emailFromStorage);
+      setmessageco("Vous êtes connecté.e en tant que ");
+    }
+  }, []);
 
   return (
     <div className="App">
@@ -82,9 +90,10 @@ function Home() {
   <button
     className="validate-btn"
     onClick={() => {
-      setSavedEmail(email); // stocke l'email
-      setEmail('');  
-      setmessageco("Vous êtes connecté.e en tant que ");       // vide l'input
+      setSavedEmail(email); // stocke l'email dans le state
+              localStorage.setItem('savedEmail', email); // stocke dans le localStorage
+              setEmail('');
+              setmessageco("Vous êtes connecté.e en tant que ");     // vide l'input
     }}
   >
   
