@@ -2,8 +2,8 @@
 node_modules
 
 # local env files
-.env
+#.env
 public
 
 # database
-database.sqlite3
+#database.sqlite3
