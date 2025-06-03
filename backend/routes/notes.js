@@ -52,23 +52,27 @@ router.get('/:noteId', function (req, res) {
 });
 
 // POST nouvelle note
-router.post('/new', function (req, res) {
+router.post('/new', async function (req, res) {
   const noteRepository = appDataSource.getRepository(Note);
-  const newNote = noteRepository.create({
-    userId: req.body.userId,
-    movieId: req.body.movieId,
-    note: req.body.note,
-  });
-  noteRepository.insert(newNote)
-    .then(function(savedNote) {
-      res.status(201).json({
-        message: 'Note successfully created',
-        id: savedNote.identifiers[0].id,
-      });
-    })
-    .catch(function () {
-      res.status(500).json({ message: 'Error while creating the note' });
-    });
+  const { userid, filmid, note } = req.body;
+
+  try {
+    // Vérifie si une note existe déjà pour cet utilisateur et ce film
+    let existing = await noteRepository.findOneBy({ userid, filmid });
+    if (existing) {
+      // Met à jour la note existante
+      existing.note = note;
+      await noteRepository.save(existing);
+      return res.status(200).json({ message: 'Note updated', note: existing });
+    } else {
+      // Crée une nouvelle note
+      const newNote = noteRepository.create({ userid, filmid, note });
+      await noteRepository.save(newNote);
+      return res.status(201).json({ message: 'Note created', note: newNote });
+    }
+  } catch (err) {
+    res.status(500).json({ message: 'Error while saving note', error: err });
+  }
 });
 
 // DELETE une note
