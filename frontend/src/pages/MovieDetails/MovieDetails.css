@@ -54,3 +54,13 @@
     max-width: 260px;
   }
 }
+.like-dislike{
+  display: relative;
+
+
+}
+.like_button{
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+

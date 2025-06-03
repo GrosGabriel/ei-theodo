@@ -6,6 +6,7 @@ import './MovieDetails.css';
 function MovieDetails() {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
+  const [movieRating, setMovieRating] = useState(0);
 
   useEffect(() => {
     axios
@@ -34,7 +35,19 @@ function MovieDetails() {
       <p className="movie-details-info">
         <span className="movie-details-label">Résumé :</span> {movie.overview}
       </p>
-    </div>
+      <div className='like-dislike'>
+     <button  className="like_button" onClick={()=>setMovieRating(1)}>
+        Like
+            
+      </button>
+      <button className="like_button" onClick={()=>setMovieRating(-1)}>
+        Dislike
+            
+      </button>
+     
+      </div>
+       Note attribuée {movieRating === 0 ? "Aucune note" : movieRating > 0 ? "👍" : "👎"}
+      </div>
   );
 }
 
