@@ -76,7 +76,7 @@ return (
       alt={movie.title}
     />
     <p className="movie-details-info">
-      <span className="movie-details-label">Année :</span> {movie.year}
+      <span className="movie-details-label">Année :</span> {movie.release_date}
     </p>
     <p className="movie-details-info">
       <span className="movie-details-label">Résumé :</span> {movie.synopsis}
