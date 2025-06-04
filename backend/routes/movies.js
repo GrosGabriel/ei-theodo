@@ -61,7 +61,38 @@ router.get('/popularity', function (req, res) {
       res.status(500).json({ message: 'Error while fetching popular movies' });
     });
 });
-
+//Route to get all movies sorted by release date
+router.get('/release-date', function (req, res) {
+  appDataSource
+    .getRepository(Movie)
+    .find({
+      order: {
+        release_date: 'DESC',
+      },
+    })
+    .then(function (movies) {
+      res.json({ movies });
+    })
+    .catch(function () {
+      res.status(500).json({ message: 'Error while fetching popular movies' });
+    });
+});
+//Route to get all movies sorted by vote average
+router.get('/vote-average', function (req, res) {
+  appDataSource
+    .getRepository(Movie)
+    .find({
+      order: {
+        vote_average: 'DESC',
+      },
+    })
+    .then(function (movies) {
+      res.json({ movies });
+    })
+    .catch(function () {
+      res.status(500).json({ message: 'Error while fetching popular movies' });
+    });
+});
 //ATTENTION A GARDER /SEARCH AVANT /:MOVIEID
 
 router.get('/:movieId', function (req, res) {

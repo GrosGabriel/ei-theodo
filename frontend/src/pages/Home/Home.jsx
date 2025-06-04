@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import centraleLogo from '../../../public/Ecole_Centrale_Supelec.svg' ; // Assurez-vous que le chemin d'importation est correct
 
 function Home() {
-  const [optionFiltrage, setOptionFiltrage] = useState("Option 1");
+  const [optionFiltrage, setOptionFiltrage] = useState("vote-average");
   const { movieName, setMovieName, filteredMovies, setMovies } = useFetchMovies(optionFiltrage);
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -56,9 +56,9 @@ function Home() {
               </span>
             </button>
             <div className="dropdown-content">
-              <a href="#option2" onClick={()=>setOptionFiltrage("Option1")}>Option 1</a>
-              <a href="#option2" onClick={()=>setOptionFiltrage("Option2")}>Option 2</a>
-              <a href="#option3" onClick={()=>setOptionFiltrage("Option3")}>Option 3</a>
+              <a href="#vote-average" onClick={()=>setOptionFiltrage("vote-average")}>Vote Average</a>
+              <a href="#release-date" onClick={()=>setOptionFiltrage("release-date")}>Release Date</a>
+              <a href="#popularity" onClick={()=>setOptionFiltrage("popularity")}>Popularity</a>
             </div>
           </div>
        
@@ -69,10 +69,10 @@ function Home() {
         <span className="remarque">
           Recommandations classées par {optionFiltrage}
         </span>
-        {optionFiltrage !== "Option1" && (
+        {optionFiltrage !== "vote-average" && (
           <button
             className="close-btn"
-            onClick={() => setOptionFiltrage("Option1")}
+            onClick={() => setOptionFiltrage("vote-average")}
             title="Réinitialiser le filtre"
           >
             &times;
