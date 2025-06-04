@@ -16,3 +16,5 @@ router.get('/', function (req, res) {
       res.status(500).json({ message: 'Error while fetching actors' });
     });
 });
+
+export default router;
