@@ -12,8 +12,8 @@ function Movie({ movie }) {
     : (movie.genre_ids ? movie.genre_ids.join(', ') : 'Genre inconnu');
 
   // Début du synopsis
-  const synopsis = movie.overview
-    ? movie.overview
+  const synopsis = movie.synopsis
+    ? movie.synopsis
     : 'Pas de synopsis.';
 
   return (
