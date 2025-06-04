@@ -26,18 +26,28 @@
 
 
 .validate-btn {
-  height: 20px;
-  padding: 0 18px;
-  border-radius: 0px;
-  border: none;
-  background: #ffd700;
-  color: #181818;
+  background: #181818 !important;
+  color: #ffd700 !important;
+  border: 1px solid #ffd70055 !important;
+  border-radius: 8px !important;
+  padding: 10px 18px !important;
+  font-size: 1em;
   font-weight: 600;
   cursor: pointer;
-  
+  transition: border 0.2s, background 0.2s, color 0.2s;
+  outline: none !important;
+  min-width: 100px;
+  height: 40px;
+  box-sizing: border-box;
+  margin-left: 8px;
+  margin-right: 8px;
+  display: inline-block;
 }
-.validate-btn:hover {
-  background: #e6c200;
+.validate-btn:hover,
+.validate-btn:focus {
+  border: 1.5px solid #ffd700 !important;
+  background: #23232b !important;
+  color: #fffbe0 !important;
 }
 
 /*bloc d'entrée mail*/
@@ -128,13 +138,26 @@
   display: block;
 }
 .dropdown-btn {
+  background: #181818 !important;
+  color: #ffd700 !important;
+  border: 1px solid #ffd70055 !important;
+  border-radius: 8px !important;
+  padding: 10px 14px !important;
+  outline: none !important;
+  transition: border 0.2s;
   min-width: 250px;
   display: flex;
   align-items: center;
   gap: 8px;
   cursor: pointer;
-  color: #888; 
+  font-size: 16px;
   justify-content: space-between;
+}
+
+.dropdown-btn:focus,
+.dropdown-btn:hover {
+  border: 1.5px solid #ffd700 !important;
+  background: #23232b !important;
 }
 
 .dropdown-arrow {
@@ -152,29 +175,33 @@
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #f9f9f9;
-
+  background: #181818 !important;
+  color: #ffd700 !important;
   min-width: 200px;
   box-shadow: 0px 8px 10px 0px rgba(0,0,0,0.2);
   z-index: 1;
-  left: 10%;      
-  right: unset; 
+  left: 10%;
+  right: unset;
   margin-left: 0;
-}
-
-.dropdown-menu:hover .dropdown-content {
-  display: block;
+  border-radius: 8px !important;
+  border: 1px solid #ffd70055 !important;
+  padding: 4px 0;
 }
 
 .dropdown-content a {
-  color: black;
-  padding: 5px 3px;
+  color: #ffd700 !important;
+  background: transparent !important;
+  padding: 10px 18px;
   text-decoration: none;
   display: block;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+  font-size: 16px;
 }
 
 .dropdown-content a:hover {
-  background-color: #f1f1f1;
+  background: #23232b !important;
+  color: #fffbe0 !important;
 }
 
 @keyframes spin {
@@ -216,4 +243,24 @@
   margin: 10px;
   background-color: white;
 
+}
+
+/* Harmonisation du style des inputs texte avec AddMovies */
+input[type="text"] {
+  background: #181818 !important;
+  color: #ffd700 !important;
+  border: 1px solid #ffd70055 !important;
+  border-radius: 8px !important;
+  padding: 10px 14px !important;
+  outline: none !important;
+  transition: border 0.2s;
+}
+
+input[type="text"]:focus {
+  border: 1.5px solid #ffd700 !important;
+  background: #23232b !important;
+}
+
+.dropdown-menu:hover .dropdown-content {
+  display: block;
 }
