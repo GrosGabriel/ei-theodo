@@ -15,7 +15,7 @@ function MovieDetails() {
     }
     return null;
   }
-  const [movieRating, setMovieRating] = useState("");
+  const [movieRating, setMovieRating] = useState("NN");
   useEffect(() => {
     fetchUserNote();},[]);
   
@@ -30,7 +30,7 @@ function MovieDetails() {
         setMovieRating(res.data.notes[0].note);
       }
     } catch (e) {
-      setMovieRating(0); // ou null si tu préfères
+      setMovieRating("NN"); // ou null si tu préfères
     }
   }
 
