@@ -2,17 +2,28 @@
   text-align: center;
   padding-top: 120px; /* Ajuste selon la nouvelle hauteur du header */
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.App-header {
+  position: fixed;
+  top: 0px;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background-color: #282c34;
+  padding: 10px 0;         /* Réduit l'espace vertical */
+  min-height: 60px;        /* Hauteur minimale plus petite */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+/*titres*/
+.page-title {
+  font-size: 40px;        
+  margin: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.page-subtitle {
+  font-size: 0.9em;        
+  margin: 0;
 }
+
 
 .validate-btn {
   height: 20px;
@@ -29,10 +40,11 @@
   background: #e6c200;
 }
 
+/*bloc d'entrée mail*/
 .connection {
   position: absolute;
-  bottom: 16px;   /* Place en bas du header */
-  right: 32px;    /* Décalage à droite */
+  bottom: 16px;   
+  right: 32px;    
   z-index: 200;
   height: 40px;
   display: flex;
@@ -50,45 +62,24 @@
   gap: 8px;
 }
 
-.App-header {
-  position: fixed;
-  top: 0px;
-  left: 0;
-  width: 100%;
-  z-index: 100;
-  background-color: #282c34;
-  padding: 10px 0;         /* Réduit l'espace vertical */
-  min-height: 60px;        /* Hauteur minimale plus petite */
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-}
+
 
 
 .App-link {
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 
 
-
+/*message : option de filtrage*/ 
 .remarque{
   font-size: 12px;
   color: rgb(128, 115, 98);
 }
-
-
 .remarque-col {
   display: flex;
   align-items: center;
-  justify-content: center; /* <-- Centrage horizontal */
-}
+  justify-content: center; }
 .close-btn {
   background: transparent;
   border: none;
@@ -99,18 +90,9 @@
 
 }
 
-.search-bar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 18px;
-  margin: 20px auto 18px auto; 
-  
-  max-width: 500px;      /* Ajuste la largeur totale du bloc centré */
-  width: 100%;           /* Prend toute la largeur possible */
-}
 
 
+/*bloc barre de recherche x bouton dédéroulant*/
 .search-input,
 .dropdown-btn {
   
@@ -126,9 +108,21 @@
 .search-input {
   flex: 1 1 0;
   min-width: 0;
-  max-width: 250px;      /* Largeur max de l'input */
+  max-width: 250px;      
+}
+.search-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  margin: 20px auto 18px auto; 
+  
+  max-width: 500px;      
+  width: 100%;          
 }
 
+
+/*menu déroulant*/
 .dropdown-menu {
   position: relative;
   display: block;
@@ -150,7 +144,7 @@
   color: rgb(17, 5, 5);
 }
 
-/* Rotation de la flèche quand le menu est ouvert */
+/* Rotation de la big flèche */
 .dropdown-menu:hover .dropdown-arrow {
   transform: rotate(180deg);
 }
@@ -163,9 +157,8 @@
   min-width: 200px;
   box-shadow: 0px 8px 10px 0px rgba(0,0,0,0.2);
   z-index: 1;
-  
-  left: 10%;      /* <-- Ajoute cette ligne */
-  right: unset; /* <-- Ajoute cette ligne pour annuler le right précédent */
+  left: 10%;      
+  right: unset; 
   margin-left: 0;
 }
 
@@ -190,15 +183,7 @@
   }
 }
 
-.page-title {
-  font-size: 40px;        /* Plus petit */
-  margin: 0;
-}
 
-.page-subtitle {
-  font-size: 0.9em;        /* Plus petit */
-  margin: 0;
-}
 .body-container{
   position: relative;
   padding: 20px;
