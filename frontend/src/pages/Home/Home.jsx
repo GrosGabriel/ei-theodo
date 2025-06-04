@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import centraleLogo from '../../../public/Ecole_Centrale_Supelec.svg' ; // Assurez-vous que le chemin d'importation est correct
 
 function Home() {
-  const [optionFiltrage, setOptionFiltrage] = useState("Option 1");
+  const [optionFiltrage, setOptionFiltrage] = useState("vote-average");
   const { movieName, setMovieName, filteredMovies, setMovies } = useFetchMovies(optionFiltrage);
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -69,10 +69,10 @@ function Home() {
         <span className="remarque">
           Recommandations classées par {optionFiltrage}
         </span>
-        {optionFiltrage !== "Option1" && (
+        {optionFiltrage !== "vote-average" && (
           <button
             className="close-btn"
-            onClick={() => setOptionFiltrage("Option1")}
+            onClick={() => setOptionFiltrage("vote-average")}
             title="Réinitialiser le filtre"
           >
             &times;
