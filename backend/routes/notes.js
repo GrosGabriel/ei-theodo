@@ -34,22 +34,6 @@ router.get('/search', function (req, res) {
     });
 });
 
-// GET une note précise (par id)
-router.get('/:noteId', function (req, res) {
-  appDataSource
-    .getRepository(Note)
-    .findOneBy({ id: Number(req.params.noteId) })
-    .then(function (note) {
-      if (note) {
-        res.json(note);
-      } else {
-        res.status(404).json({ message: 'Note not found' });
-      }
-    })
-    .catch(function () {
-      res.status(500).json({ message: 'Error while fetching the note' });
-    });
-});
 
 // POST nouvelle note
 router.post('/new', async function (req, res) {
