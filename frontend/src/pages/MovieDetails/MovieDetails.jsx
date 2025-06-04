@@ -53,6 +53,15 @@ function MovieDetails() {
     fetchUserNote();
   }
 
+  async function deleteNote() {
+    const email = localStorage.getItem('savedEmail');
+    if (!email) return;
+    const userId = await getUserIdByEmail(email);
+    if (!userId) return;
+    await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/notes/search?userid=${userId}&filmid=${id}`);
+    setMovieRating("NN");
+  }
+
 useEffect(() => {
   axios
     .get(`${import.meta.env.VITE_BACKEND_URL}/movies/${id}`)
@@ -91,13 +100,25 @@ return (
       <span className="movie-details-label">Genre :</span> {movie.genre}
     </p>
       <div className='like-dislike'>
-        {[0,1,2,3,4,5].map((n) => (
+        {[1,2,3,4,5].map((n) => (
           <button
             key={n}
-            className="like_button"
-            onClick={() => { setMovieRating(n); saveNote(n); }}
+            className={`like_button${Number(movieRating) >= n ? " selected" : ""}`}
+            onClick={() => {
+              if (Number(movieRating) === n) {
+                // Si on clique sur l'étoile déjà sélectionnée, on supprime la note
+                deleteNote();
+              } else {
+                setMovieRating(n);
+                saveNote(n);
+              }
+            }}
+            title={`${n} étoile${n > 1 ? "s" : ""}`}
+            type="button"
           >
-            {n}
+            <span style={{filter: Number(movieRating) >= n ? "none" : "grayscale(1) brightness(0.7)"}}>
+              ⭐
+            </span>
           </button>
         ))}
       </div>
