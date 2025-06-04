@@ -20,8 +20,8 @@ router.get('/', function (req, res) {
 // GET notes par userId ou movieId (optionnel)
 router.get('/search', function (req, res) {
   const where = {};
-  if (req.query.userId) where.userId = req.query.userId;
-  if (req.query.movieId) where.movieId = req.query.movieId;
+  if (req.query.userid) where.userid = req.query.userid;
+  if (req.query.filmid) where.filmid = req.query.filmid;
 
   appDataSource
     .getRepository(Note)

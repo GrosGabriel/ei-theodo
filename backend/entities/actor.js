@@ -7,9 +7,9 @@ const Actor = new typeorm.EntitySchema({
       primary: true,
       type: Number,
       nullable: false,
+      generated: true,
     },
     movieid: {
-      primary: true,
       type: Number,
       nullable: false,
     },
