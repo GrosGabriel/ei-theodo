@@ -89,14 +89,25 @@ function Home() {
   />
   <button
     className="validate-btn"
-    onClick={() => {
-      setSavedEmail(email); // stocke l'email dans le state
-              localStorage.setItem('savedEmail', email); // stocke dans le localStorage
-              setEmail('');
-              setmessageco("Vous êtes connecté.e en tant que ");     // vide l'input
+    onClick={async () => {
+      // Vérifie si l'email existe dans la base
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/search?email=${email}`);
+        if (res.data && res.data.users && res.data.users.length > 0) {
+          setSavedEmail(email);
+          localStorage.setItem('savedEmail', email);
+          setEmail('');
+          setmessageco("Vous êtes connecté.e en tant que ");
+        } else {
+          setSavedEmail(''); // <-- Ajoute ceci
+          localStorage.removeItem('savedEmail'); // <-- Optionnel, pour vider aussi le localStorage
+          setmessageco("Cet email n'existe pas. Veuillez créer un compte.");
+        }
+      } catch (err) {
+        setmessageco("Erreur lors de la vérification de l'email.");
+      }
     }}
   >
-  
     Valider
   </button>
   

@@ -6,7 +6,7 @@ import './MovieDetails.css';
 function MovieDetails() {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
-  const [movieRating, setMovieRating] = useState(0);
+  
 
   async function getUserIdByEmail(email) {
     const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/search?email=${email}`);
@@ -14,6 +14,22 @@ function MovieDetails() {
       return res.data.users[0].id;
     }
     return null;
+  }
+  const [movieRating, setMovieRating] = useState(0);
+  
+  async function fetchUserNote() {
+    const email = localStorage.getItem('savedEmail');
+    if (!email) return;
+    const userId = await getUserIdByEmail(email);
+    if (!userId) return;
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/${userId}/note?movie=${id}`);
+      if (res.data && res.data.note !== undefined) {
+        setMovieRating(res.data.note);
+      }
+    } catch (e) {
+      setMovieRating(0); // ou null si tu préfères
+    }
   }
 
   async function saveNote(rating) {
@@ -51,20 +67,7 @@ function MovieDetails() {
     // eslint-disable-next-line
   }, [id]);
 
-  async function fetchUserNote() {
-    const email = localStorage.getItem('savedEmail');
-    if (!email) return;
-    const userId = await getUserIdByEmail(email);
-    if (!userId) return;
-    try {
-      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/${userId}/note?movie=${id}`);
-      if (res.data && res.data.note !== undefined) {
-        setMovieRating(res.data.note);
-      }
-    } catch (e) {
-      setMovieRating(0); // ou null si tu préfères
-    }
-  }
+  
 
   if (!movie) return <div className="movie-details-container">Chargement...</div>;
 
