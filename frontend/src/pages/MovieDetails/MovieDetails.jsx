@@ -72,7 +72,11 @@ return (
     {/* Si tu as un champ "poster" ou "affiche", adapte ici */}
     <img
       className="movie-details-poster"
-      src={movie.poster_path || 'https://via.placeholder.com/300x450?text=No+Image'}
+      src={
+        movie.poster_path
+          ? `https://image.tmdb.org/t/p/w300${movie.poster_path}`
+          : 'https://via.placeholder.com/300x450?text=No+Image'
+      }
       alt={movie.title}
     />
     <p className="movie-details-info">
