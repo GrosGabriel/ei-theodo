@@ -1,3 +1,117 @@
 .about {
   text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 12px 48px 12px;
+}
+
+.about-description {
+  font-size: 1.15rem;
+  margin-bottom: 32px;
+  color: #ffd700;
+}
+
+.about-team {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 32px;
+  margin-bottom: 40px;
+}
+
+.about-member {
+  background: #23232b;
+  border-radius: 16px;
+  padding: 24px 18px;
+  width: 260px;
+  box-shadow: 0 2px 16px #0004;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.about-photo-placeholder {
+  width: 90px;
+  height: 90px;
+  background: #ffd70033;
+  border-radius: 50%;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffd70099;
+  font-size: 1.1rem;
+  font-style: italic;
+}
+
+.about-photo {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 14px;
+  border: 2px solid #ffd700;
+  background: #fff;
+}
+
+.about-info h3 {
+  margin: 0 0 6px 0;
+  color: #ffd700;
+}
+
+.about-info a {
+  color: #ffd700;
+  text-decoration: underline;
+  font-size: 1rem;
+}
+
+.about-info p {
+  font-size: 0.98rem;
+  color: #fffbe0;
+  margin-top: 8px;
+}
+
+.about-footer {
+  margin-top: 48px;
+  color: #ffd700;
+  font-size: 1.05rem;
+}
+
+.about-logo-placeholder {
+  width: 120px;
+  height: 60px;
+  background: #ffd70033;
+  border-radius: 12px;
+  margin: 0 auto 12px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffd70099;
+  font-size: 1rem;
+  font-style: italic;
+}
+
+.about-encadrants {
+  color: #fffbe0;
+  font-size: 0.98rem;
+}
+
+.centrale-logo {
+  width: 120px;
+  height: auto;
+  margin-bottom: 10px;
+  background-color: white;
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.logo-noms {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.logo {
+  margin: 0 10px;
 }
