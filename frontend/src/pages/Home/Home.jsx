@@ -56,9 +56,9 @@ function Home() {
               </span>
             </button>
             <div className="dropdown-content">
-              <a href="#option2" onClick={()=>setOptionFiltrage("Option1")}>Option 1</a>
-              <a href="#option2" onClick={()=>setOptionFiltrage("Option2")}>Option 2</a>
-              <a href="#option3" onClick={()=>setOptionFiltrage("Option3")}>Option 3</a>
+              <a href="#vote-average" onClick={()=>setOptionFiltrage("vote-average")}>Vote Average</a>
+              <a href="#release-date" onClick={()=>setOptionFiltrage("release-date")}>Release Date</a>
+              <a href="#popularity" onClick={()=>setOptionFiltrage("popularity")}>Popularity</a>
             </div>
           </div>
        

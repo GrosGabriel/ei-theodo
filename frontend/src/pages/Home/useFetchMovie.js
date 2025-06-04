@@ -13,10 +13,10 @@ export function useFetchMovies(optionFiltrage) {
     
     
     let url = " "; 
-    if (optionFiltrage === "Option1") 
-      url = 'http://localhost:8000/movies/popularity';
-    else if (optionFiltrage === "Option2") 
-      url = 'http://localhost:8000/movies/year';
+    if (optionFiltrage === "Vote Average") 
+      url = 'http://localhost:8000/movies/vote-average';
+    else if (optionFiltrage === "Release Date") 
+      url = 'http://localhost:8000/movies/release-date';
     else 
       url = 'http://localhost:8000/movies/popularity'; 
     
