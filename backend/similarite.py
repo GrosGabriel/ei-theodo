@@ -179,11 +179,22 @@ def prediction_note_film_pour_un_user(user_id_x,film_id,classement,dico,N):
             nominateur += sim * (note_y_film - moy_notes(dico[y]))
     return user_x_moy + (nominateur / denom) if denom != 0 else user_x_moy
 
+def film_non_note(user_id):
+    """Fonction qui récupère les films non notés par l'utilisateur.
 
+    Args:
+        user_id (type): description
+
+    Returns:
+        type: description
+    """
+    cursor.execute("SELECT filmid FROM movies WHERE id NOT IN (SELECT film FROM notes WHERE userid = ?)", (user_id,))
+    results = cursor.fetchall()
+    return [row[0] for row in results]
 
 
 def get_recommendations(user_id, N=5):
-    films_pas_notes_par_user = []
+    films_pas_notes_par_user = film_non_note(user_id)
     resultat = []
     for film_id in films_pas_notes_par_user:
         resultat.append((film_id, prediction_note_film_pour_un_user(user_id, film_id, classement_similarite(user_id, similarity_dict()), similarity_dict(), N)))
