@@ -13,8 +13,6 @@ function Home() {
   const [email, setEmail] = useState('');
   const [savedEmail, setSavedEmail] = useState('');
   const [messageco, setmessageco] = useState('');
-  
-
   // Nombre de colonnes dans la grille
   const columns = 5;
   // Calcul du nombre de placeholders à ajouter pour compléter la dernière ligne
@@ -22,7 +20,9 @@ function Home() {
     filteredMovies.length > 0
       ? (columns - (filteredMovies.length % columns)) % columns
       : 0;
-    // 1. Charger l'email sauvegardé au montage du composant
+
+
+
   useEffect(() => {
     const emailFromStorage = localStorage.getItem('savedEmail');
     if (emailFromStorage) {

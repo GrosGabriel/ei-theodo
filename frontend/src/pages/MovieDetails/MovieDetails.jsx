@@ -51,17 +51,12 @@ function MovieDetails() {
     fetchUserNote();
   }
 
-  useEffect(() => {
-    axios
-      .get(`https://api.themoviedb.org/3/movie/${id}?language=en-US`, {
-        headers: {
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZjlmNjAwMzY4MzMzODNkNGIwYjNhNzJiODA3MzdjNCIsInN1YiI6IjY0NzA5YmE4YzVhZGE1MDBkZWU2ZTMxMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Em7Y9fSW94J91rbuKFjDWxmpWaQzTitxRKNdQ5Lh2Eo',
-          accept: 'application/json',
-        },
-      })
-      .then((res) => setMovie(res.data));
-  }, [id]);
-
+useEffect(() => {
+  axios
+    .get(`${import.meta.env.VITE_BACKEND_URL}/movies/${id}`)
+    .then((res) => setMovie(res.data))
+    .catch(() => setMovie(null));
+}, [id]);
   useEffect(() => {
     fetchUserNote();
     // eslint-disable-next-line
@@ -71,20 +66,24 @@ function MovieDetails() {
 
   if (!movie) return <div className="movie-details-container">Chargement...</div>;
 
-  return (
-    <div className="movie-details-container">
-      <h2 className="movie-details-title">{movie.title}</h2>
-      <img
-        className="movie-details-poster"
-        src={movie.poster_path ? `https://image.tmdb.org/t/p/w300${movie.poster_path}` : 'https://via.placeholder.com/300x450?text=No+Image'}
-        alt={movie.title}
-      />
-      <p className="movie-details-info">
-        <span className="movie-details-label">Date de sortie :</span> {movie.release_date}
-      </p>
-      <p className="movie-details-info">
-        <span className="movie-details-label">Résumé :</span> {movie.overview}
-      </p>
+return (
+  <div className="movie-details-container">
+    <h2 className="movie-details-title">{movie.title}</h2>
+    {/* Si tu as un champ "poster" ou "affiche", adapte ici */}
+    <img
+      className="movie-details-poster"
+      src={movie.poster_path || 'https://via.placeholder.com/300x450?text=No+Image'}
+      alt={movie.title}
+    />
+    <p className="movie-details-info">
+      <span className="movie-details-label">Année :</span> {movie.year}
+    </p>
+    <p className="movie-details-info">
+      <span className="movie-details-label">Résumé :</span> {movie.synopsis}
+    </p>
+    <p className="movie-details-info">
+      <span className="movie-details-label">Genre :</span> {movie.genre}
+    </p>
       <div className='like-dislike'>
         {[0,1,2,3,4,5].map((n) => (
           <button
