@@ -31,6 +31,32 @@ function Home() {
     }
   }, []);
 
+  useEffect(() => {
+    let url = "";
+    if (optionFiltrage === "vote-average")
+      url = 'http://localhost:8000/movies/vote-average';
+    else if (optionFiltrage === "release-date")
+      url = 'http://localhost:8000/movies/release-date';
+    else
+      url = 'http://localhost:8000/movies/popularity';
+
+    axios
+      .get(url)
+      .then((response) => {
+        setMovies(response.data.movies);
+      })
+      .catch((error) => {
+        console.log('Erreur API:', error);
+      });
+  }, [optionFiltrage]);
+
+  function getFiltreLabel(optionFiltrage) {
+    if (optionFiltrage === "vote-average") return "Vote Average";
+    if (optionFiltrage === "release-date") return "Release Date";
+    if (optionFiltrage === "popularity") return "Popularity";
+    return "Filtres";
+  }
+
   return (
     <div className="App">
       
@@ -48,7 +74,7 @@ function Home() {
           />
           <div className="dropdown-menu">
             <button className="dropdown-btn">
-              Filtres
+              {getFiltreLabel(optionFiltrage)}
               <span className="dropdown-arrow" aria-hidden="true">
                 <svg width="18" height="18" viewBox="0 0 20 20" fill="#888" style={{display: 'block'}}>
                   <path d="M5 8l5 5 5-5" stroke="#888" strokeWidth="2" fill="none" strokeLinecap="round"/>
