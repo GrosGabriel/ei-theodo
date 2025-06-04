@@ -15,7 +15,9 @@ function MovieDetails() {
     }
     return null;
   }
-  const [movieRating, setMovieRating] = useState(0);
+  const [movieRating, setMovieRating] = useState("NN");
+  useEffect(() => {
+    fetchUserNote();},[]);
   
   async function fetchUserNote() {
     const email = localStorage.getItem('savedEmail');
@@ -23,12 +25,12 @@ function MovieDetails() {
     const userId = await getUserIdByEmail(email);
     if (!userId) return;
     try {
-      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/${userId}/note?movie=${id}`);
-      if (res.data && res.data.note !== undefined) {
-        setMovieRating(res.data.note);
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/notes/search?userid=${userId}&filmid=${id}`);
+      if (res.data && res.data.notes[0].note !== undefined) {
+        setMovieRating(res.data.notes[0].note);
       }
     } catch (e) {
-      setMovieRating(0); // ou null si tu préfères
+      setMovieRating("NN"); // ou null si tu préfères
     }
   }
 
@@ -72,7 +74,11 @@ return (
     {/* Si tu as un champ "poster" ou "affiche", adapte ici */}
     <img
       className="movie-details-poster"
-      src={movie.poster_path || 'https://via.placeholder.com/300x450?text=No+Image'}
+      src={
+        movie.poster_path
+          ? `https://image.tmdb.org/t/p/w300${movie.poster_path}`
+          : 'https://via.placeholder.com/300x450?text=No+Image'
+      }
       alt={movie.title}
     />
     <p className="movie-details-info">

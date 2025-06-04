@@ -55,3 +55,9 @@
   background: #fffbe6;
   color: #bfa100;
 }
+
+.movies-table td.release-date,
+.movies-table th.release-date {
+
+  white-space: nowrap;
+}

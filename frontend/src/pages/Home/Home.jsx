@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import centraleLogo from '../../../public/Ecole_Centrale_Supelec.svg' ; // Assurez-vous que le chemin d'importation est correct
 
 function Home() {
-  const [optionFiltrage, setOptionFiltrage] = useState("Option 1");
+  const [optionFiltrage, setOptionFiltrage] = useState("vote-average");
   const { movieName, setMovieName, filteredMovies, setMovies } = useFetchMovies(optionFiltrage);
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -31,6 +31,32 @@ function Home() {
     }
   }, []);
 
+  useEffect(() => {
+    let url = "";
+    if (optionFiltrage === "vote-average")
+      url = 'http://localhost:8000/movies/vote-average';
+    else if (optionFiltrage === "release-date")
+      url = 'http://localhost:8000/movies/release-date';
+    else
+      url = 'http://localhost:8000/movies/popularity';
+
+    axios
+      .get(url)
+      .then((response) => {
+        setMovies(response.data.movies);
+      })
+      .catch((error) => {
+        console.log('Erreur API:', error);
+      });
+  }, [optionFiltrage]);
+
+  function getFiltreLabel(optionFiltrage) {
+    if (optionFiltrage === "vote-average") return "Vote Average";
+    if (optionFiltrage === "release-date") return "Release Date";
+    if (optionFiltrage === "popularity") return "Popularity";
+    return "Filtres";
+  }
+
   return (
     <div className="App">
       
@@ -48,7 +74,7 @@ function Home() {
           />
           <div className="dropdown-menu">
             <button className="dropdown-btn">
-              Filtres
+              {getFiltreLabel(optionFiltrage)}
               <span className="dropdown-arrow" aria-hidden="true">
                 <svg width="18" height="18" viewBox="0 0 20 20" fill="#888" style={{display: 'block'}}>
                   <path d="M5 8l5 5 5-5" stroke="#888" strokeWidth="2" fill="none" strokeLinecap="round"/>
@@ -69,10 +95,10 @@ function Home() {
         <span className="remarque">
           Recommandations classées par {optionFiltrage}
         </span>
-        {optionFiltrage !== "Option1" && (
+        {optionFiltrage !== "vote-average" && (
           <button
             className="close-btn"
-            onClick={() => setOptionFiltrage("Option1")}
+            onClick={() => setOptionFiltrage("vote-average")}
             title="Réinitialiser le filtre"
           >
             &times;

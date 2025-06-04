@@ -25,7 +25,7 @@ function MoviesTable({ movies, filters, onSuccessfulMovieDeletion }) {
         <thead>
           <tr>
             <th>Title</th>
-            <th>Year</th>
+            <th className="release-date">Release Date</th>
             <th>Director</th>
             <th>Genre</th>
             <th>Synopsis</th>
@@ -36,7 +36,7 @@ function MoviesTable({ movies, filters, onSuccessfulMovieDeletion }) {
           {filteredMovies.map((movie) => (
             <tr key={movie.id}>
               <td>{movie.title}</td>
-              <td>{movie.year}</td>
+              <td className="release-date">{movie.release_date}</td>
               <td>{movie.director}</td>
               <td>{movie.genre}</td>
               <td>{movie.synopsis}</td>
