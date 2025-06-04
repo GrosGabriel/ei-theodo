@@ -137,7 +137,7 @@ def Pearson_correlation(user_id1,user_id2,dico):
 
 
 
-def predict
+#def predict
 
 
 conn.close()
