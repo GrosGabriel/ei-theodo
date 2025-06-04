@@ -59,17 +59,5 @@ router.post('/new', async function (req, res) {
   }
 });
 
-// DELETE une note
-router.delete('/:noteId', function (req, res) {
-  appDataSource
-    .getRepository(Note)
-    .delete({ id: req.params.noteId })
-    .then(function () {
-      res.status(200).json({ message: 'Note successfully deleted' });
-    })
-    .catch(function () {
-      res.status(500).json({ message: 'Error while deleting the note' });
-    });
-});
 
 export default router;
