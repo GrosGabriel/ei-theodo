@@ -45,6 +45,22 @@ router.get('/search', function (req, res) {
     });
 });
 
+//Route to get all movies sorted by popularity
+router.get('/popularity', function (req, res) {
+  appDataSource
+    .getRepository(Movie)
+    .find({
+      order: {
+        popularity: 'DESC',
+      },
+    })
+    .then(function (movies) {
+      res.json({ movies });
+    })
+    .catch(function () {
+      res.status(500).json({ message: 'Error while fetching popular movies' });
+    });
+});
 
 //ATTENTION A GARDER /SEARCH AVANT /:MOVIEID
 
@@ -63,10 +79,6 @@ router.get('/:movieId', function (req, res) {
       res.status(500).json({ message: 'Error while fetching the movie' });
     });
 });
-
-
-
-
 
 
 

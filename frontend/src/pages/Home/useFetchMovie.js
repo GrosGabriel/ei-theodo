@@ -27,7 +27,7 @@ export function useFetchMovies(optionFiltrage) {
       .get(url)
       .then((response) => {
         
-        setMovies(response.data.results.slice(0,10));
+        setMovies(response.data.movies);
       })
       .catch((error) => {
         console.log('Erreur API:', error);
