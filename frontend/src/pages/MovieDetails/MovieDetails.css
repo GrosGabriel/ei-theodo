@@ -74,16 +74,13 @@
   filter: grayscale(0.2) brightness(0.95);
 }
 
-.like_button:hover,
-.like_button:focus {
+.like_button:hover {
   transform: scale(1.18) rotate(-6deg);
-  filter: grayscale(0) brightness(1.15) drop-shadow(0 0 6px #ffd70088);
-  color: #fffbe0;
 }
 
 .like_button.selected {
-  color: #fffbe0;
-  filter: grayscale(0) brightness(1.2);
+  color: #ffd700;
+  filter: grayscale(0) brightness(1.15) drop-shadow(0 0 6px #ffd70088);
 }
 
 
