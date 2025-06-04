@@ -136,9 +136,14 @@ def Pearson_correlation(user_id1,user_id2,dico):
 
 
 
-
-#def predict
-
+def classement_similarite(user_id, dico):
+    classement = []
+    for user_id2 in dico:
+        if user_id != user_id2:
+            sim = Pearson_correlation(user_id, user_id2, dico)
+            classement.append((user_id2, sim))
+    classement.sort(key=lambda x: x[1], reverse=True)
+    return classement
 
 conn.close()
 
