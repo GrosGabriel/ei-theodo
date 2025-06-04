@@ -6,16 +6,15 @@
  * @class
  * @implements {MigrationInterface}
  */
-export default class AddActorTable1749026272086 {
-    name = 'AddActorTable1749026272086'
+export default class AddActorTable1749027900140 {
+    name = 'AddActorTable1749027900140'
 
     async up(queryRunner) {
         await queryRunner.query(`
             CREATE TABLE "actor" (
-                "actorid" integer NOT NULL,
+                "actorid" integer PRIMARY KEY AUTOINCREMENT NOT NULL,
                 "movieid" integer NOT NULL,
-                "actor" varchar NOT NULL,
-                PRIMARY KEY ("actorid", "movieid")
+                "actor" varchar NOT NULL
             )
         `);
     }
