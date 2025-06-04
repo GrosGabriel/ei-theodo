@@ -34,7 +34,6 @@ router.get('/search', function (req, res) {
     });
 });
 
-
 // POST nouvelle note
 router.post('/new', async function (req, res) {
   const noteRepository = appDataSource.getRepository(Note);
@@ -59,5 +58,28 @@ router.post('/new', async function (req, res) {
   }
 });
 
+router.delete('/search', function (req, res) {
+  const criteria = {};
+  if (req.query.userid) criteria.userid = req.query.userid;
+  if (req.query.filmid) criteria.filmid = req.query.filmid;
+
+  if (!criteria.userid || !criteria.filmid) {
+    return res.status(400).json({ message: 'userid and filmid are required' });
+  }
+
+  appDataSource
+    .getRepository(Note)
+    .delete(criteria)
+    .then(function (result) {
+      if (result.affected > 0) {
+        res.status(200).json({ message: 'Note successfully deleted' });
+      } else {
+        res.status(404).json({ message: 'Note not found' });
+      }
+    })
+    .catch(function () {
+      res.status(500).json({ message: 'Error while deleting the note' });
+    });
+});
 
 export default router;
