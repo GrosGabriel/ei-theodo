@@ -53,4 +53,20 @@ router.delete('/:userId', function (req, res) {
     });
 });
 
+router.get('/search', function (req, res) {
+  const email = req.query.email;
+  if (!email) {
+    return res.status(400).json({ message: 'Missing email parameter' });
+  }
+  appDataSource
+    .getRepository(User)
+    .find({ where: { email } })
+    .then(function (users) {
+      res.json({ users });
+    })
+    .catch(function () {
+      res.status(500).json({ message: 'Error while searching for user' });
+    });
+});
+
 export default router;
