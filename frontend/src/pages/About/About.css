@@ -115,3 +115,10 @@
 .logo {
   margin: 0 10px;
 }
+
+.about-thanks {
+  margin: 24px 0 0 0;
+  font-size: 1.08rem;
+  color: #ffd700;
+  text-align: center;
+}

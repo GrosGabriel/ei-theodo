@@ -13,7 +13,7 @@ function About() {
         <div className="about-member">
           <img
             className="about-photo"
-            src="/gros.jpg"
+            src="/gros.jpeg"
             alt="Gabriel Gros"
           />
           <div className="about-info">
@@ -29,7 +29,7 @@ function About() {
         <div className="about-member">
           <img
             className="about-photo"
-            src="/lechoux.jpg"
+            src="/lechoux.jpeg"
             alt="Gaetan Lechoux"
           />
           <div className="about-info">
@@ -45,7 +45,7 @@ function About() {
         <div className="about-member">
           <img
             className="about-photo"
-            src="/foucaud.jpg"
+            src="/foucaud.jpeg"
             alt="Romain Foucaud"
           />
           <div className="about-info">
@@ -59,6 +59,54 @@ function About() {
           </div>
         </div>
       </div>
+
+      <h2>Nos encadrants</h2>
+      <div className="about-team">
+        <div className="about-member">
+          <img
+            className="about-photo"
+            src="/eudes.jpeg"
+            alt="Thomas Eudes"
+          />
+          <div className="about-info">
+            <h3>Thomas Eudes</h3>
+            <a href="https://www.linkedin.com/in/thomas-eudes-4a326a173/" target="_blank" rel="noopener noreferrer">
+              LinkedIn
+            </a>
+          </div>
+        </div>
+        <div className="about-member">
+          <img
+            className="about-photo"
+            src="/bentounes.jpeg"
+            alt="Rayann Bentounes"
+          />
+          <div className="about-info">
+            <h3>Rayann Bentounes</h3>
+            <a href="https://www.linkedin.com/in/rayann-bentounes/" target="_blank" rel="noopener noreferrer">
+              LinkedIn
+            </a>
+          </div>
+        </div>
+        <div className="about-member">
+          <img
+            className="about-photo"
+            src="/ouerdane.jpeg"
+            alt="Wassila Ouerdane"
+          />
+          <div className="about-info">
+            <h3>Wassila Ouerdane</h3>
+            <a href="https://www.linkedin.com/in/wassila-ouerdane-2362932b/" target="_blank" rel="noopener noreferrer">
+              LinkedIn
+            </a>
+          </div>
+        </div>
+      </div>
+      <div className="about-thanks">
+        <p>
+          Un grand merci à nos encadrants et à notre professeure Wassila Ouerdane pour leur accompagnement, leurs conseils et leur disponibilité tout au long du projet.
+        </p>
+      </div>
       <div className="about-footer">
         <div className="logo-noms">
           <div className="logo">
@@ -67,7 +115,6 @@ function About() {
         </div>
         <p>
           CentraleSupélec, ST4 EI n°3<br />
-          <span className="about-encadrants">Encadrants : (à compléter)</span>
         </p>
       </div>
     </div>
