@@ -6,8 +6,8 @@
  * @class
  * @implements {MigrationInterface}
  */
-export default class AddMovieTable1748941797350 {
-    name = 'AddMovieTable1748941797350'
+export default class AddMovieTable1749022320640 {
+    name = 'AddMovieTable1749022320640'
 
     async up(queryRunner) {
         await queryRunner.query(`
@@ -15,9 +15,12 @@ export default class AddMovieTable1748941797350 {
                 "id" integer PRIMARY KEY AUTOINCREMENT NOT NULL,
                 "title" varchar NOT NULL,
                 "director" varchar,
-                "year" varchar,
                 "genre" varchar,
-                "synopsis" varchar
+                "synopsis" varchar,
+                "popularity" integer,
+                "release_date" varchar,
+                "vote_average" integer,
+                "poster_path" varchar
             )
         `);
     }
