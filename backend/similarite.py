@@ -236,6 +236,7 @@ def get_recommandations(user_id, N=5):
     resultat.sort(key=lambda x: x[1], reverse=True)
     return resultat
 
+<<<<<<< HEAD
 def recommendations_json(user_id,N=5):
     recos = get_recommandations(user_id, N)
     res = []
@@ -248,8 +249,8 @@ def recommendations_json(user_id,N=5):
 #print(recommendations_json(4,1)) 
 
 @app.route('/movies/recommandation/<int:userid>')
-def recommendations(userid):
-    res = recommendations_json(userid)
+def recommandations(userid):
+    res = recommandations_json(userid)
     return res
 
 

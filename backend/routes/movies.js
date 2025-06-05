@@ -97,7 +97,7 @@ router.get('/vote-average', function (req, res) {
 });
 router.get('/recommandation/:userid', async function (req, res) { // <--- AJOUTE async ICI
   try {
-    const response = await axios.get('http://localhost:5000/movies/recommandation/${req.params.userid}');
+    const response = await axios.get(`http://localhost:5000/movies/recommandation/${req.params.userid}`);
     res.json({movies: response.data});
   } catch (error) {
     res.status(500).json({ message: 'Error while fetching similar movies' });
