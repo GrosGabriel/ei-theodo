@@ -221,7 +221,7 @@ def film_non_note(user_id):
     return [row[0] for row in results]
 
 
-def get_recommendations(user_id, N=5):
+def get_recommandations(user_id, N=5):
     films_pas_notes_par_user = film_non_note(user_id)
     resultat = []
     for film_id in films_pas_notes_par_user:
@@ -230,8 +230,8 @@ def get_recommendations(user_id, N=5):
     return resultat
 
 
-def recommendations_json(user_id,N=5):
-    recos = get_recommendations(user_id, N)
+def recommandations_json(user_id,N=5):
+    recos = get_recommandations(user_id, N)
     res = []
     dico_movie = movie_info_dict()
     for movie_id, predicted_note in recos:
@@ -240,7 +240,7 @@ def recommendations_json(user_id,N=5):
     return res
 
 
-print(recommendations_json(4,1))  # Exemple d'utilisation pour l'utilisateur avec ID 1
+print(recommandations_json(4,1))  # Exemple d'utilisation pour l'utilisateur avec ID 1
 
 
 conn.close()
