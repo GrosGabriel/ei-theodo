@@ -2,7 +2,7 @@ import numpy as np
 import sqlite3
 
 
-db_path = "../database.sqlite3"
+db_path = "database.sqlite3"
 
 #Connection à la base de données
 conn  = sqlite3.connect(db_path)
@@ -35,7 +35,7 @@ def creation_dico_features():
     Returns:
          dico: _description_
     """
-    cursor.execute("SELECT* FROM movies")
+    cursor.execute("SELECT* FROM movie")
     results = cursor.fetchall()
     features_dico = {}
     for row in results:
@@ -50,7 +50,7 @@ def creation_dico_features():
 def get_movie_vector(movie_id):
     dico = creation_dico_features()
     
-    cursor.execute("SELECT* FROM notes WHERE id = ?", (movie_id,))
+    cursor.execute("SELECT* FROM note WHERE id = ?", (movie_id,))
     results = cursor.fetchall()
     for row in results:
         for elt in row :
@@ -62,6 +62,11 @@ def get_movie_vector(movie_id):
  #USER BASED
 
 def similarity_dict():
+    """
+    Récupère les notes des utilisateurs et les stocke dans un dictionnaire où la clé est l'ID de l'utilisateur et la valeur est un dictionnaire des films notés par cet utilisateur avec leurs notes.
+    La structure du dictionnaire est la suivante : 
+    {user_id: {movie_id: note, ...}, ...}
+    """
     cursor.execute("SELECT* FROM user")
     dico = {} 
     results_users = cursor.fetchall()
@@ -79,10 +84,33 @@ def similarity_dict():
                 dico[user_id][movie_id] = valeur_note
     return dico
 
-#print(similarity_dict())
+print(similarity_dict())
 
+def movie_info_dict():
+    """
+    Renvoie un dictionnaire {movie_id: {colonne: valeur, ...}} pour tous les films de la base.
+    """
+    cursor.execute("SELECT * FROM movie")
+    results = cursor.fetchall()
+    movie_dict={}
+    for row in results:
+        movie_id = row[0]
+        movie_dict[movie_id] = {
+            "id": row[0],
+            "title": row[1],
+            "director": row[2],
+            "genre": row[3],
+            "synopsis": row[4],
+            "popularity": row[5],
+            "release_date": row[6],  
+            "vote_average": row[7],
+            "poster_path": row[8]
+        }
 
+    return movie_dict
 
+dico_movie = movie_info_dict()
+#print(dico_movie[123])  # Affiche toutes les infos du film d'id 123
 
 def link_two_couple_lists(l1,l2):
     """
@@ -188,7 +216,7 @@ def film_non_note(user_id):
     Returns:
         type: description
     """
-    cursor.execute("SELECT filmid FROM movies WHERE id NOT IN (SELECT film FROM notes WHERE userid = ?)", (user_id,))
+    cursor.execute("SELECT id FROM movie WHERE id NOT IN (SELECT filmid FROM note WHERE userid = ?)", (user_id,))
     results = cursor.fetchall()
     return [row[0] for row in results]
 
@@ -200,6 +228,20 @@ def get_recommendations(user_id, N=5):
         resultat.append((film_id, prediction_note_film_pour_un_user(user_id, film_id, classement_similarite(user_id, similarity_dict()), similarity_dict(), N)))
     resultat.sort(key=lambda x: x[1], reverse=True)
     return resultat
+
+
+def recommendations_json(user_id,N=5):
+    recos = get_recommendations(user_id, N)
+    res = []
+    dico_movie = movie_info_dict()
+    for movie_id, predicted_note in recos:
+        res.append(movie_info_dict()[movie_id])
+
+    return res
+
+
+print(recommendations_json(4,1))  # Exemple d'utilisation pour l'utilisateur avec ID 1
+
 
 conn.close()
 

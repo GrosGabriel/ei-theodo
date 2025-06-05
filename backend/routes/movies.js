@@ -95,6 +95,7 @@ router.get('/vote-average', function (req, res) {
 });
 //ATTENTION A GARDER /SEARCH AVANT /:MOVIEID
 
+
 router.get('/:movieId', function (req, res) {
   appDataSource
     .getRepository(Movie)
