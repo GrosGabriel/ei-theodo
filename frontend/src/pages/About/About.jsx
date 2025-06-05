@@ -22,7 +22,7 @@ function About() {
               LinkedIn
             </a>
             <p>
-              Étudiant à CentraleSupélec, passionné par le développement web et la data. Gabriel a contribué à la conception et à l'intégration du frontend.
+              Étudiant à CentraleSupélec, passionné par le développement web et la data. Gabriel a contribué à la conception et à l'intégration du frontend, mais aussi à la conception du système de recommandation.
             </p>
           </div>
         </div>
