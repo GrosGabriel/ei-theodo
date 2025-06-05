@@ -245,7 +245,7 @@ def recommandations_json(user_id,N=5):
 
     return res
 
-#print(recommendations_json(4,1)) 
+
 
 @app.route('/movies/recommandation/<int:userid>')
 def recommandations(userid):
