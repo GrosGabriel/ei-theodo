@@ -1,5 +1,8 @@
 import numpy as np
 import sqlite3
+from flask import Flask
+app = Flask(__name__)
+
 
 
 db_path = "database.sqlite3"
@@ -7,6 +10,13 @@ db_path = "database.sqlite3"
 #Connection à la base de données
 conn  = sqlite3.connect(db_path)
 cursor = conn.cursor()
+
+@app.route('/recommandation/movies/<int:userid>')
+def recommandation_json(userid):
+    return "GAB ENVOIE TA FONCTION"
+app.run(port=5000)
+
+
 
 def get_user_vector(user_id):
     """Fonction qui récupère le vecteur d'utilisateur où les coordonnées sont les notes qu'il a données aux films. 
