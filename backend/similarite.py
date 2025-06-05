@@ -236,8 +236,8 @@ def get_recommandations(user_id, N=5):
     resultat.sort(key=lambda x: x[1], reverse=True)
     return resultat
 
-<<<<<<< HEAD
-def recommendations_json(user_id,N=5):
+
+def recommandations_json(user_id,N=5):
     recos = get_recommandations(user_id, N)
     res = []
     dico_movie = movie_info_dict()
