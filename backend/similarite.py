@@ -27,7 +27,7 @@ def get_user_vector(user_id):
     Returns:
         _type_: _description_
     """
-    cursor.execute("SELECT* FROM notes WHERE id = ?", (user_id,))
+    cursor.execute("SELECT* FROM note WHERE id = ?", (user_id,))
     results = cursor.fetchall()
     vecteur = [row[1] for row in results]
     return np.array(vecteur) if vecteur else None
@@ -250,7 +250,7 @@ def recommandations_json(user_id,N=5):
     return res
 
 
-print(recommandations_json(4,1))  # Exemple d'utilisation pour l'utilisateur avec ID 1
+#print(recommandations_json(4,1))  # Exemple d'utilisation pour l'utilisateur avec ID 1
 
 
 conn.close()

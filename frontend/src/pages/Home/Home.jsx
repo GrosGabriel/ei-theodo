@@ -32,23 +32,42 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    let url = "";
-    if (optionFiltrage === "vote-average")
-      url = 'http://localhost:8000/movies/vote-average';
-    else if (optionFiltrage === "release-date")
-      url = 'http://localhost:8000/movies/release-date';
-    else
-      url = 'http://localhost:8000/movies/popularity';
+    async function fetchMovies() {
+      let url = "";
+      if (optionFiltrage === "vote-average")
+        url = 'http://localhost:8000/movies/vote-average';
+      else if (optionFiltrage === "release-date")
+        url = 'http://localhost:8000/movies/release-date';
+      else if (optionFiltrage === "popularity")
+        url = 'http://localhost:8000/movies/popularity';
+      else {
+        // get user_id
+        async function getUserIdByEmail(email) {
+          const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/search?email=${email}`);
+          if (res.data && res.data.users && res.data.users.length > 0) {
+            return res.data.users[0].id;
+          }
+          return null;
+        }
+        const userId = await getUserIdByEmail(savedEmail);
+        if (!userId) {
+          console.error("Utilisateur non trouvé.");
+          url = 'http://localhost:8000/movies/popularity';
+        } else {
+          url = `http://localhost:5000/movies/recommandation?userid=${userId}`;
+        }
+      }
 
-    axios
-      .get(url)
-      .then((response) => {
+      try {
+        const response = await axios.get(url);
         setMovies(response.data.movies);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.log('Erreur API:', error);
-      });
-  }, [optionFiltrage]);
+      }
+    }
+
+    fetchMovies();
+  }, [optionFiltrage, savedEmail]);
 
   function getFiltreLabel(optionFiltrage) {
     if (optionFiltrage === "vote-average") return "Vote Average";
