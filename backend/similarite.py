@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 
 
-db_path = "./database.sqlite3"
+db_path = "database.sqlite3"
 
 #Connection à la base de données
 conn  = sqlite3.connect(db_path)
@@ -60,7 +60,7 @@ def creation_dico_features():
 def get_movie_vector(movie_id):
     dico = creation_dico_features()
     
-    cursor.execute("SELECT* FROM notes WHERE filmid = ?", (movie_id,))
+    cursor.execute("SELECT* FROM note WHERE id = ?", (movie_id,))
     results = cursor.fetchall()
     for row in results:
         for elt in row :
@@ -72,6 +72,11 @@ def get_movie_vector(movie_id):
  #USER BASED
 
 def similarity_dict():
+    """
+    Récupère les notes des utilisateurs et les stocke dans un dictionnaire où la clé est l'ID de l'utilisateur et la valeur est un dictionnaire des films notés par cet utilisateur avec leurs notes.
+    La structure du dictionnaire est la suivante : 
+    {user_id: {movie_id: note, ...}, ...}
+    """
     cursor.execute("SELECT* FROM user")
     dico = {} 
     results_users = cursor.fetchall()
@@ -84,76 +89,12 @@ def similarity_dict():
             movie_id = note[1]
             valeur_note = note[2] 
             if user_id not in dico:
-                dico[user_id]= [(movie_id,valeur_note)]
+                dico[user_id]= {movie_id: valeur_note}
             else : 
-                dico[user_id].append((movie_id, valeur_note))
+                dico[user_id][movie_id] = valeur_note
     return dico
 
 print(similarity_dict())
-
-
-
-
-def link_two_couple_lists(l1,l2):
-    """
-    Coupe les listes l1 et l2 (qui sont des listes de couples) en fonction de leur premier élément.
-    C'est à dire qu'on souhaite les listes où les premiers éléments des couples sont tous deux égaux. Il faut qu'il soit présent dans les deux listes.
-
-    Reviens à calculer l'ensemble Sxy du cours qui correspond aux éléments notés par x et par y.
-    
-    """
- 
-    l1_filtered = [elt for elt in l1 if elt[0] in [elt[0] for elt in l2]]
-    l2_filtered = [elt for elt in l2 if elt[0] in [elt[0] for elt in l1]]
-    return l1_filtered, l2_filtered
-
-def moy_notes(l1):
-    """Fonction qui calcule la moyenne des notes d'une liste de couples (id, note).
-
-    Args:
-        l1 (list): Liste de couples (id, note).
-
-    Returns:
-        float: Moyenne des notes.
-    """
-    if not l1:
-        return 0
-    return sum(note for _, note in l1) / len(l1)
- 
-def Pearson_correlation(user_id1,user_id2,dico):
-    """Fonction qui calcule la similarité entre deux utilisateurs en utilisant la corrélation de Pearson.
-    """
-
-    user_list_1 = dico[user_id1]
-
-    user_list_2 = dico[user_id2]
-
-    user_1_moy = moy_notes(user_list_1)
-    user_2_moy = moy_notes(user_list_2) 
-
-    user_list_1_filtered,user_list_2_filtered = link_two_couple_lists(user_list_1, user_list_2)
-
-    denom1 = sum((note - user_1_moy) ** 2 for _, note in user_list_1_filtered)
-    denom2 = sum((note - user_2_moy) ** 2 for _, note in user_list_2_filtered)
-    
-    nominateur = sum((note1 - user_1_moy) * (note2 - user_2_moy)
-               for (id1, note1), (id2, note2) in zip(user_list_1_filtered, user_list_2_filtered))
-
-    if nominateur == 0 :
-        return 0.0
-    else: 
-        return nominateur / (np.sqrt(denom1) * np.sqrt(denom2))
-
-
-
-def classement_similarite(user_id, dico):
-    classement = []
-    for user_id2 in dico:
-        if user_id != user_id2:
-            sim = Pearson_correlation(user_id, user_id2, dico)
-            classement.append((user_id2, sim))
-    classement.sort(key=lambda x: x[1], reverse=True)
-    return classement
 
 def movie_info_dict():
     """
@@ -165,6 +106,7 @@ def movie_info_dict():
     for row in results:
         movie_id = row[0]
         movie_dict[movie_id] = {
+            "id": row[0],
             "title": row[1],
             "director": row[2],
             "genre": row[3],
@@ -177,8 +119,141 @@ def movie_info_dict():
 
     return movie_dict
 
+dico_movie = movie_info_dict()
+#print(dico_movie[123])  # Affiche toutes les infos du film d'id 123
+
+def link_two_couple_lists(l1,l2):
+    """
+    Coupe les dictionnaires l1 et l2 (qui sont des dictionnaires {film:note} en fonction de leur premier élément.
+    C'est à dire qu'on souhaite les listes où les premiers éléments des couples sont tous deux égaux. Il faut qu'il soit présent dans les deux listes.
+
+    Reviens à calculer l'ensemble Sxy du cours qui correspond aux éléments notés par x et par y.
+    
+    """
+ 
+    l1_filtered = {}
+    for key,note in l1.items():
+        if key in l2:
+            l1_filtered[key] = note
+    
+    l2_filtered = {}
+    for key,note in l2.items():
+        if key in l1:
+            l2_filtered[key] = note
+    return l1_filtered, l2_filtered
+
+def moy_notes(l1):
+    """Fonction qui calcule la moyenne des notes d'un dictionnaire {id:note}
+
+    Args:
+        l1 (dictionnaire) : {id,note}
+
+    Returns:
+        float: Moyenne des notes.
+    """
+    sum=0
+    for id,note in l1.items():
+        sum += note
+    if len(l1) == 0:
+        return 0.0
+    else:
+        return sum / len(l1)
+ 
+def Pearson_correlation(user_id1,user_id2,dico):
+    """Fonction qui calcule la similarité entre deux utilisateurs en utilisant la corrélation de Pearson.
+    """
+
+    user_dict_1 = dico[user_id1]
+
+    user_dict_2 = dico[user_id2]
+
+    user_1_moy = moy_notes(user_dict_1)
+    user_2_moy = moy_notes(user_dict_2) 
+
+    user_dict_1_filtered,user_dict_2_filtered = link_two_couple_lists(user_dict_1, user_dict_2)
+
+    denom1 = sum((note - user_1_moy) ** 2 for _, note in user_dict_1_filtered.items())
+    denom2 = sum((note - user_2_moy) ** 2 for _, note in user_dict_2_filtered.items())
+    
+    nominateur = sum((note1 - user_1_moy) * (note2 - user_2_moy)
+               for (id1, note1), (id2, note2) in zip(user_dict_1_filtered.items(), user_dict_2_filtered.items()))
+
+    if nominateur == 0 :
+        return 0.0
+    else: 
+        return nominateur / (np.sqrt(denom1) * np.sqrt(denom2))
+
+def classement_similarite(user_id, dico):
+
+    classement = []
+    for user_id2 in dico:
+        if user_id != user_id2:
+            sim = Pearson_correlation(user_id, user_id2, dico)
+            classement.append((user_id2, sim))
+    classement.sort(key=lambda x: x[1], reverse=True)
+
+    return classement
+    
+
+def prediction_note_film_pour_un_user(user_id_x,film_id,classement,dico,N):
+    """Fonction qui prédit la note d'un utilisateur pour un film en utilisant la similarité de Pearson."""
+
+    user_list_x = dico[user_id_x]
+
+    user_x_moy = moy_notes(user_list_x)
+
+    note_x_film=user_x_moy
+    denom = 0
+    compteur=0
+    for y,sim in classement: #On ne prend que les N premiers utilisateurs les plus similaires
+        if compteur >= N:
+            break
+        if film_id in dico[y].keys():
+            compteur += 1
+            note_y_film = dico[y][film_id]
+            moy_y = moy_notes(dico[y])
+         
+            denom += abs(sim)
+            nominateur += sim * (note_y_film - moy_notes(dico[y]))
+    return user_x_moy + (nominateur / denom) if denom != 0 else user_x_moy
+
+def film_non_note(user_id):
+    """Fonction qui récupère les films non notés par l'utilisateur.
+
+    Args:
+        user_id (type): description
+
+    Returns:
+        type: description
+    """
+    cursor.execute("SELECT id FROM movie WHERE id NOT IN (SELECT filmid FROM note WHERE userid = ?)", (user_id,))
+    results = cursor.fetchall()
+    return [row[0] for row in results]
 
 
+def get_recommendations(user_id, N=5):
+    films_pas_notes_par_user = film_non_note(user_id)
+    resultat = []
+    for film_id in films_pas_notes_par_user:
+        resultat.append((film_id, prediction_note_film_pour_un_user(user_id, film_id, classement_similarite(user_id, similarity_dict()), similarity_dict(), N)))
+    resultat.sort(key=lambda x: x[1], reverse=True)
+    return resultat
+
+
+def recommendations_json(user_id,N=5):
+    recos = get_recommendations(user_id, N)
+    res = []
+    dico_movie = movie_info_dict()
+    for movie_id, predicted_note in recos:
+        res.append(movie_info_dict()[movie_id])
+
+    return res
+
+
+print(recommendations_json(4,1))  # Exemple d'utilisation pour l'utilisateur avec ID 1
+
+
+conn.close()
 
     
 
