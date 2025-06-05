@@ -1,6 +1,6 @@
 import numpy as np
 import sqlite3
-from flask import Flask
+from flask import Flask, jsonify
 app = Flask(__name__)
 
 
@@ -8,13 +8,10 @@ app = Flask(__name__)
 db_path = "database.sqlite3"
 
 #Connection à la base de données
-conn  = sqlite3.connect(db_path)
+conn  = sqlite3.connect(db_path,check_same_thread=False)
 cursor = conn.cursor()
 
-@app.route('/recommandation/movies/<int:userid>')
-def recommandation_json(userid):
-    return "GAB ENVOIE TA FONCTION"
-app.run(port=5000)
+
 
 
 
@@ -94,7 +91,7 @@ def similarity_dict():
                 dico[user_id][movie_id] = valeur_note
     return dico
 
-print(similarity_dict())
+#print(similarity_dict())
 
 def movie_info_dict():
     """
@@ -239,7 +236,6 @@ def get_recommendations(user_id, N=5):
     resultat.sort(key=lambda x: x[1], reverse=True)
     return resultat
 
-
 def recommendations_json(user_id,N=5):
     recos = get_recommendations(user_id, N)
     res = []
@@ -249,11 +245,16 @@ def recommendations_json(user_id,N=5):
 
     return res
 
+#print(recommendations_json(4,1)) 
 
-print(recommendations_json(4,1))  # Exemple d'utilisation pour l'utilisateur avec ID 1
+@app.route('/movies/recommandation/<int:userid>')
+def recommendations(userid):
+    res = recommendations_json(userid)
+    return res
 
 
-conn.close()
-
+if __name__ == "__main__":
+    app.run(port=5000, debug=True)
+    conn.close()
     
 
