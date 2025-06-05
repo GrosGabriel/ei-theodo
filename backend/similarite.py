@@ -24,7 +24,7 @@ def get_user_vector(user_id):
     Returns:
         _type_: _description_
     """
-    cursor.execute("SELECT* FROM notes WHERE id = ?", (user_id,))
+    cursor.execute("SELECT* FROM note WHERE id = ?", (user_id,))
     results = cursor.fetchall()
     vecteur = [row[1] for row in results]
     return np.array(vecteur) if vecteur else None
@@ -228,7 +228,7 @@ def film_non_note(user_id):
     return [row[0] for row in results]
 
 
-def get_recommendations(user_id, N=5):
+def get_recommandations(user_id, N=5):
     films_pas_notes_par_user = film_non_note(user_id)
     resultat = []
     for film_id in films_pas_notes_par_user:
