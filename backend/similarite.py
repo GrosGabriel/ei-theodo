@@ -237,7 +237,7 @@ def get_recommandations(user_id, N=5):
     return resultat
 
 def recommendations_json(user_id,N=5):
-    recos = get_recommendations(user_id, N)
+    recos = get_recommandations(user_id, N)
     res = []
     dico_movie = movie_info_dict()
     for movie_id, predicted_note in recos:

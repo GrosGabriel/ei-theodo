@@ -2,38 +2,52 @@ import React, { useState, useEffect } from 'react';
 import './Home.css';
 import axios from 'axios'; // Assurez-vous d'importer axios
 
-export function useFetchMovies(optionFiltrage) {
+export function useFetchMovies(optionFiltrage,setOptionFiltrage,savedEmail) {
   const [movieName, setMovieName] = useState('');
   const [movies, setMovies] = useState([]);
 
-  // useEffect pour charger les films populaires au montage du composant
-  useEffect(() => {
-    console.log('Le composant Home a été monté !');
 
-    
-    
-    let url = " "; 
-    if (optionFiltrage === "Vote Average") 
-      url = 'http://localhost:8000/movies/vote-average';
-    else if (optionFiltrage === "Release Date") 
-      url = 'http://localhost:8000/movies/release-date';
-    else 
-      url = 'http://localhost:8000/movies/popularity'; 
-    
-    
-    
-    
-    
-    axios
-      .get(url)
-      .then((response) => {
-        
+  useEffect(() => {     
+    async function fetchMovies() {
+      console.log({})
+      let url = "";
+      if (optionFiltrage === "vote-average")
+        url = 'http://localhost:8000/movies/vote-average';
+      else if (optionFiltrage === "release-date")
+        url = 'http://localhost:8000/movies/release-date';
+      else if (optionFiltrage === "popularity")
+        url = 'http://localhost:8000/movies/popularity';
+      else {
+
+        // get user_id
+        async function getUserIdByEmail(email) {
+          const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/search?email=${email}`);
+          if (res.data && res.data.users && res.data.users.length > 0) {
+            return res.data.users[0].id;
+          }
+          return null;
+        }
+        const userId = await getUserIdByEmail(savedEmail);
+        if (!userId) {
+          console.error("Utilisateur non trouvé.");
+          setOptionFiltrage("popularity");
+          url = 'http://localhost:8000/movies/popularity';
+        } else {
+          url = `http://localhost:8000/movies/recommandation/${userId}`;
+        }
+      }
+
+      try {
+        const response = await axios.get(url);
         setMovies(response.data.movies);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.log('Erreur API:', error);
-      });
-  }, [optionFiltrage]); // [] = exécuter une seule fois au montage
+      }
+    }
+
+    fetchMovies();
+  }, [optionFiltrage, savedEmail]);
+
   return { movieName,setMovieName, filteredMovies: movies.filter(movie=>movie.title.toLowerCase().includes(movieName.toLowerCase())), setMovies };
 }
 
