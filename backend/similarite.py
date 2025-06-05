@@ -1,12 +1,22 @@
 import numpy as np
 import sqlite3
+from flask import Flask
+app = Flask(__name__)
 
 
-db_path = "../database.sqlite3"
+
+db_path = "./database.sqlite3"
 
 #Connection à la base de données
 conn  = sqlite3.connect(db_path)
 cursor = conn.cursor()
+
+@app.route('/recommandation/movies/<int:userid>')
+def recommandation_json(userid):
+    return "GAB ENVOIE TA FONCTION"
+app.run(port=5000)
+
+
 
 def get_user_vector(user_id):
     """Fonction qui récupère le vecteur d'utilisateur où les coordonnées sont les notes qu'il a données aux films. 
@@ -35,7 +45,7 @@ def creation_dico_features():
     Returns:
          dico: _description_
     """
-    cursor.execute("SELECT* FROM movies")
+    cursor.execute("SELECT* FROM movie")
     results = cursor.fetchall()
     features_dico = {}
     for row in results:
@@ -50,7 +60,7 @@ def creation_dico_features():
 def get_movie_vector(movie_id):
     dico = creation_dico_features()
     
-    cursor.execute("SELECT* FROM notes WHERE id = ?", (movie_id,))
+    cursor.execute("SELECT* FROM notes WHERE filmid = ?", (movie_id,))
     results = cursor.fetchall()
     for row in results:
         for elt in row :
@@ -79,7 +89,7 @@ def similarity_dict():
                 dico[user_id].append((movie_id, valeur_note))
     return dico
 
-#print(similarity_dict())
+print(similarity_dict())
 
 
 
@@ -145,7 +155,30 @@ def classement_similarite(user_id, dico):
     classement.sort(key=lambda x: x[1], reverse=True)
     return classement
 
-conn.close()
+def movie_info_dict():
+    """
+    Renvoie un dictionnaire {movie_id: {colonne: valeur, ...}} pour tous les films de la base.
+    """
+    cursor.execute("SELECT * FROM movie")
+    results = cursor.fetchall()
+    movie_dict={}
+    for row in results:
+        movie_id = row[0]
+        movie_dict[movie_id] = {
+            "title": row[1],
+            "director": row[2],
+            "genre": row[3],
+            "synopsis": row[4],
+            "popularity": row[5],
+            "release_date": row[6],  
+            "vote_average": row[7],
+            "poster_path": row[8]
+        }
+
+    return movie_dict
+
+
+
 
     
 
