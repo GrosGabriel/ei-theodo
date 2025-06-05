@@ -54,7 +54,7 @@ function About() {
               LinkedIn
             </a>
             <p>
-              Étudiant à CentraleSupélec, passionné par l'innovation et la gestion de projet. Romain a assuré la coordination et la qualité du projet.
+              Étudiant à CentraleSupélec, passionné par le développement web et la data. Romain a travaillé sur le backend et le système de recommandation.
             </p>
           </div>
         </div>
