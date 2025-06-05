@@ -1,7 +1,9 @@
 import express from 'express';
 import { appDataSource } from '../datasource.js';
 import Movie from '../entities/movie.js';
+import axios from 'axios';
 
+// const axios = require('axios').default ; // Import axios for making HTTP requests
 const router = express.Router();
 
 // router.get('/', function (req, res) {
@@ -92,6 +94,14 @@ router.get('/vote-average', function (req, res) {
     .catch(function () {
       res.status(500).json({ message: 'Error while fetching popular movies' });
     });
+});
+router.get('/recommandation/:userid', async function (req, res) { // <--- AJOUTE async ICI
+  try {
+    const response = await axios.get('http://localhost:5000/movies/recommandation/:userid');
+    res.json({movies: response.data});
+  } catch (error) {
+    res.status(500).json({ message: 'Error while fetching similar movies' });
+  }
 });
 //ATTENTION A GARDER /SEARCH AVANT /:MOVIEID
 
