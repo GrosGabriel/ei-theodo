@@ -12,12 +12,13 @@ function MoviesTable({ movies, filters, onSuccessfulMovieDeletion }) {
   const filteredMovies = movies.filter((movie) => {
     return (
       (!filters.title || !movie.title || movie.title.toLowerCase().includes(filters.title.toLowerCase())) &&
-      (!filters.year || !movie.year || String(movie.year).includes(filters.year)) &&
+      (!filters.release_date || !movie.release_date || String(movie.release_date).includes(filters.release_date)) &&
       (!filters.director || !movie.director || movie.director.toLowerCase().includes(filters.director.toLowerCase())) &&
       (!filters.genre || !movie.genre || movie.genre.toLowerCase().includes(filters.genre.toLowerCase())) &&
       (!filters.synopsis || !movie.synopsis || movie.synopsis.toLowerCase().includes(filters.synopsis.toLowerCase()))
     );
   });
+
 
   return (
     <div>

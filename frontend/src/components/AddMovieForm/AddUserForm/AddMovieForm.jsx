@@ -49,9 +49,9 @@ function AddMovieForm({ onSuccessfulMovieCreation, filters, setFilters }) {
         />
         <input
           className="add-movie-input"
-          placeholder="Year"
-          value={filters.year}
-          onChange={(e) => setFilters({ ...filters, year: e.target.value })}
+          placeholder="Release Date"
+          value={filters.release_date}
+          onChange={(e) => setFilters({ ...filters, release_date: e.target.value })}
         />
         <input
           className="add-movie-input"

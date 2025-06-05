@@ -10,7 +10,7 @@ function Movies() {
   // Ajoute un état pour les filtres
   const [filters, setFilters] = useState({
     title: '',
-    year: '',
+    release_date: '',
     director: '',
     genre: '',
     synopsis: '',
