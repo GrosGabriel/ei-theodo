@@ -1,5 +1,8 @@
 import numpy as np
 import sqlite3
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.preprocessing import MultiLabelBinarizer
+from sklearn.metrics.pairwise import cosine_similarity
 from flask import Flask, jsonify
 app = Flask(__name__)
 
@@ -12,7 +15,7 @@ conn  = sqlite3.connect(db_path,check_same_thread=False)
 cursor = conn.cursor()
 
 
- #USER BASED
+#USER BASED
 
 def similarity_dict():
     """
@@ -205,6 +208,69 @@ def recommandations_json(user_id,N=5):
 @app.route('/movies/recommandation/<int:userid>')
 def recommandations(userid):
     res = recommandations_json(userid)
+    return res
+
+#CONTENT BASED 
+
+
+# Pondération des caract
+poids_genre = 2.0  
+poids_synopsis = 1.0   
+poids_real = 0.5  
+def recommandation_content(movie_id, poids_genre=2.0, poids_synopsis=1.0, poids_real=0.5):
+    """
+    Recommande des films similaires à partir d'un film donné en utilisant la similarité cosinus sur les synopsis, genres et réalisateurs.
+    """
+    # Récupération des informations du film
+    movie = movie_info_dict()
+    
+    # Matrice de caractéristiques pour tous les films
+    movies = list(dico_movie.values())
+
+    # Matrice tf-idf des synopsis 
+    tfidf = TfidfVectorizer(stop_words='english')
+    synopsis_matrix = tfidf.fit_transform([m['synopsis'] or '' for m in movies])
+
+    # Vecteur du genre zéro ou un 
+    mlb = MultiLabelBinarizer()
+    genre_matrix = mlb.fit_transform([m['genre'].split(',') if m['genre'] else [] for m in movies])
+
+    # Vecteur du réalisateur : zéro ou un 
+    directors = list(set(m['director'] for m in movies if m['director']))
+    director_map = {d: i for i, d in enumerate(directors)}
+    director_matrix = np.zeros((len(movies), len(directors)))
+    for idx, m in enumerate(movies):
+        if m['director'] in director_map:
+            director_matrix[idx, director_map[m['director']]] = 1
+
+    # Concaténation pondérée
+    X = np.hstack([
+        poids_genre * genre_matrix,
+        poids_real * director_matrix,
+        poids_synopsis * synopsis_matrix.toarray()
+    ])
+
+    # Similarité cosinus entre tous les films
+    sim_matrix = cosine_similarity(X)
+
+    # Pour recommander à partir du film donné
+    movie_idx = next((i for i, m in enumerate(movies) if m['id'] == movie_id), None)
+    
+    if movie_idx is None:
+        return []
+
+    similarities = sim_matrix[movie_idx]
+    
+    # On trie les indices des films les plus similaires (hors lui-même)
+    recommended_indices = similarities.argsort()[::-1][1:6]
+    
+    recommended_movies = [movies[i] for i in recommended_indices]
+
+    return recommended_movies
+
+@app.route('/movies/recommandation_content/<int:movieid>')
+def recommandations_content_get(movieid):
+    res = recommandation_content(movieid)
     return res
 
 
