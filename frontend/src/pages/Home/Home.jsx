@@ -41,6 +41,7 @@ useEffect(() => {
     if (optionFiltrage === "popularity") return "Popularity";
     if (optionFiltrage === "recommandation") return "Recommandation";
     if (optionFiltrage === "revoir") return "Revoir";
+    if (optionFiltrage === "Basé sur vos gouts") return "Basé sur vos gouts";
     return "Filtres";
   }
 
@@ -70,6 +71,7 @@ useEffect(() => {
               <a href="#release-date" onClick={()=>setOptionFiltrage("release-date")}>Release Date</a>
               <a href="#popularity" onClick={()=>setOptionFiltrage("popularity")}>Popularity</a>
               <a href="#recommandation" onClick={()=>setOptionFiltrage("recommandation")}>Recommandation</a>
+              <a href="#Basé sur vos gouts" onClick={()=>setOptionFiltrage("Basé sur vos gouts")}>Basé sur vos gouts</a>
               <a href="#revoir" onClick={()=>setOptionFiltrage("revoir")}>Revoir</a>
             </div>
             </div>

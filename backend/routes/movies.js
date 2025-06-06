@@ -106,6 +106,14 @@ router.get('/recommandation_content/:movieid', async function (req, res) { // <-
   }
 });
 
+router.get('/recommandation_content_user/:userid', async function (req, res) { // <--- AJOUTE async ICI
+  try {
+    const response = await axios.get(`http://localhost:5000/movies/recommandation_content_user/${req.params.userid}`);
+    res.json({movies: response.data});
+  } catch (error) {
+    res.status(500).json({ message: 'Error while fetching user specific similar movies' });
+  }
+});
 
 router.get('/recommandation/:userid', async function (req, res) { // <--- AJOUTE async ICI
   try {

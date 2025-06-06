@@ -335,7 +335,10 @@ def recommandation_content_get(movieid):
     res = recommandation_content(movieid)
     return res
 
-
+@app.route('/movies/recommandation_content_user/<int:userid>')
+def recommandation_content_user_get(userid):
+    res = recommandation_content_user(userid)
+    return res
 
 
 

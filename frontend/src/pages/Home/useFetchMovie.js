@@ -33,6 +33,22 @@ export function useFetchMovies(optionFiltrage,setOptionFiltrage,savedEmail) {
         } else {
           url = `http://localhost:8000/movies/revoir/${userId}`;
         }
+      } else if (optionFiltrage === "Basé sur vos gouts") {
+        async function getUserIdByEmail(email) {
+          const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/search?email=${email}`);
+          if (res.data && res.data.users && res.data.users.length > 0) {
+            return res.data.users[0].id;
+          }
+          return null;
+        }
+        const userId = await getUserIdByEmail(savedEmail);
+        if (!userId) {
+          console.error("Utilisateur non trouvé.");
+          setOptionFiltrage("popularity");
+          url = 'http://localhost:8000/movies/popularity';
+        } else {
+          url = `http://localhost:8000/movies/recommandation_content_user/${userId}`;
+        }
       } else {
 
         async function getUserIdByEmail(email) {
