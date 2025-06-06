@@ -41,6 +41,7 @@ function Home() {
     if (optionFiltrage === "release-date") return "Release Date";
     if (optionFiltrage === "popularity") return "Popularity";
     if (optionFiltrage === "recommandation") return "Recommandation";
+    if (optionFiltrage === "revoir") return "Revoir";
     return "Filtres";
   }
 

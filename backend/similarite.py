@@ -12,60 +12,6 @@ conn  = sqlite3.connect(db_path,check_same_thread=False)
 cursor = conn.cursor()
 
 
-
-
-
-def get_user_vector(user_id):
-    """Fonction qui récupère le vecteur d'utilisateur où les coordonnées sont les notes qu'il a données aux films. 
-
-    Args:
-        user_id (_type_): _description_
-
-    Returns:
-        _type_: _description_
-    """
-    cursor.execute("SELECT* FROM note WHERE id = ?", (user_id,))
-    results = cursor.fetchall()
-    vecteur = [row[1] for row in results]
-    return np.array(vecteur) if vecteur else None
-
-
-def cosinus_similarite(a, b):
-    if np.linalg.norm(a) == 0 or np.linalg.norm(b) == 0:
-        return 0.0
-    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
-
-
-def creation_dico_features():
-    """Fonction qui initialise un dictionnaire avec les caractéristiques des films en clé et des 0 en valeurs.
-
-    Returns:
-         dico: _description_
-    """
-    cursor.execute("SELECT* FROM movie")
-    results = cursor.fetchall()
-    features_dico = {}
-    for row in results:
-        for item in row : 
-            if item not in features_dico:
-                features_dico[item] = 0
-                
-    return features_dico
-
-
-
-def get_movie_vector(movie_id):
-    dico = creation_dico_features()
-    
-    cursor.execute("SELECT* FROM note WHERE id = ?", (movie_id,))
-    results = cursor.fetchall()
-    for row in results:
-        for elt in row :
-            dico[elt] = 1
-    return np.array(list(dico.values()))
- 
- 
-
  #USER BASED
 
 def similarity_dict():
@@ -156,6 +102,7 @@ def moy_notes(l1):
     else:
         return sum / len(l1)
  
+
 def Pearson_correlation(user_id1,user_id2,dico):
     """Fonction qui calcule la similarité entre deux utilisateurs en utilisant la corrélation de Pearson.
     """
@@ -172,8 +119,11 @@ def Pearson_correlation(user_id1,user_id2,dico):
     denom1 = sum((note - user_1_moy) ** 2 for _, note in user_dict_1_filtered.items())
     denom2 = sum((note - user_2_moy) ** 2 for _, note in user_dict_2_filtered.items())
     
-    nominateur = sum((note1 - user_1_moy) * (note2 - user_2_moy)
-               for (id1, note1), (id2, note2) in zip(user_dict_1_filtered.items(), user_dict_2_filtered.items()))
+
+    nominateur = 0
+    for k in user_dict_1_filtered.keys():
+        nominateur += (user_dict_1_filtered[k] - user_1_moy) * (user_dict_2_filtered[k] - user_2_moy)
+
 
     if nominateur == 0 :
         return 0.0
@@ -201,7 +151,8 @@ def prediction_note_film_pour_un_user(user_id_x,film_id,classement,dico,N):
 
     note_x_film=user_x_moy
     denom = 0
-    compteur=0
+    compteur = 0
+    nominateur  = 0
     for y,sim in classement: #On ne prend que les N premiers utilisateurs les plus similaires
         if compteur >= N:
             break
@@ -231,8 +182,9 @@ def film_non_note(user_id):
 def get_recommandations(user_id, N=5):
     films_pas_notes_par_user = film_non_note(user_id)
     resultat = []
+    dico = similarity_dict()
     for film_id in films_pas_notes_par_user:
-        resultat.append((film_id, prediction_note_film_pour_un_user(user_id, film_id, classement_similarite(user_id, similarity_dict()), similarity_dict(), N)))
+        resultat.append((film_id, prediction_note_film_pour_un_user(user_id, film_id, classement_similarite(user_id, dico), dico, N)))
     resultat.sort(key=lambda x: x[1], reverse=True)
     return resultat
 
@@ -241,7 +193,7 @@ def recommandations_json(user_id,N=5):
     res = []
     dico_movie = movie_info_dict()
     for movie_id, predicted_note in recos:
-        res.append(movie_info_dict()[movie_id])
+        res.append(dico_movie[movie_id])
 
     return res
 
