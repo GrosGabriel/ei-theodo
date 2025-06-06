@@ -22,7 +22,7 @@ function About() {
               LinkedIn
             </a>
             <p>
-              Étudiant à CentraleSupélec, passionné par le développement web et la data. Gabriel a contribué à la conception et à l'intégration du frontend, mais aussi à la conception du système de recommandation.
+              
             </p>
           </div>
         </div>
@@ -38,7 +38,7 @@ function About() {
               LinkedIn
             </a>
             <p>
-              Étudiant à CentraleSupélec, intéressé par l'architecture logicielle et l'expérience utilisateur. Gaetan a travaillé sur le backend et l'API.
+             
             </p>
           </div>
         </div>
@@ -54,7 +54,7 @@ function About() {
               LinkedIn
             </a>
             <p>
-              Étudiant à CentraleSupélec, passionné par le développement web et la data. Romain a travaillé sur le backend et le système de recommandation.
+             
             </p>
           </div>
         </div>
