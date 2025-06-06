@@ -60,3 +60,10 @@ npm run build
 ```
 npm run lint
 ```
+
+## API Recommandation
+
+```
+cd backend
+python similarite.py
+```
