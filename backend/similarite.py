@@ -210,6 +210,8 @@ def recommandations(userid):
     res = recommandations_json(userid)
     return res
 
+
+
 #CONTENT BASED 
 
 
