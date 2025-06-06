@@ -9,6 +9,7 @@ HEADERS = {
     "accept": "application/json"
 }
 
+
 DB_PATH = "database.sqlite3"
 NB_PAGES = 20  # Tu peux ajuster selon tes besoins
 
