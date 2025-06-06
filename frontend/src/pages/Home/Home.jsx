@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useFetchMovies } from './useFetchMovie';
 import Movie from '../../components/Movie/Movie';
 import { useNavigate } from 'react-router-dom';
-import centraleLogo from '../../../public/Ecole_Centrale_Supelec.svg' ; // Assurez-vous que le chemin d'importation est correct
+import centraleLogo from '../../../public/Ecole_Centrale_Supelec.svg' ; 
 
 function Home() {
   const [optionFiltrage, setOptionFiltrage] = useState("vote-average");
@@ -16,7 +16,7 @@ function Home() {
 
 
 
-  useEffect(() => {     //a garder
+  useEffect(() => {     
     const emailFromStorage = localStorage.getItem('savedEmail');
     if (emailFromStorage) {
       setSavedEmail(emailFromStorage);
@@ -26,9 +26,8 @@ function Home() {
 
   const { movieName, setMovieName, filteredMovies, setMovies } = useFetchMovies(optionFiltrage,setOptionFiltrage,savedEmail) ;
 
-    // Nombre de colonnes dans la grille
   const columns = 5;
-  // Calcul du nombre de placeholders à ajouter pour compléter la dernière ligne
+
   const placeholders =
     filteredMovies.length > 0
       ? (columns - (filteredMovies.length % columns)) % columns
@@ -106,7 +105,7 @@ function Home() {
   <button
     className="validate-btn"
     onClick={async () => {
-      // Vérifie si l'email existe dans la base
+     
       try {
         const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/search?email=${email}`);
         if (res.data && res.data.users && res.data.users.length > 0) {
@@ -115,8 +114,8 @@ function Home() {
           setEmail('');
           setmessageco("Vous êtes connecté.e en tant que ");
         } else {
-          setSavedEmail(''); // <-- Ajoute ceci
-          localStorage.removeItem('savedEmail'); // <-- Optionnel, pour vider aussi le localStorage
+          setSavedEmail(''); 
+          localStorage.removeItem('savedEmail'); 
           setmessageco("Cet email n'existe pas. Veuillez créer un compte.");
         }
       } catch (err) {
