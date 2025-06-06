@@ -105,7 +105,7 @@ def moy_notes(l1):
 
 def Pearson_correlation(user_id1,user_id2,dico):
     """
-    
+
     Fonction qui calcule la similarité entre deux utilisateurs en utilisant la corrélation de Pearson.
     
     """
@@ -152,7 +152,7 @@ def prediction_note_film_pour_un_user(user_id_x,film_id,classement,dico,N):
 
     user_x_moy = moy_notes(user_list_x)
 
-    note_x_film=user_x_moy
+    
     denom = 0
     compteur = 0
     nominateur  = 0
