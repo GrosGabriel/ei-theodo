@@ -5,7 +5,7 @@ import { useFetchMovies } from './useFetchMovie';
 import Movie from '../../components/Movie/Movie';
 import { useNavigate } from 'react-router-dom';
 import centraleLogo from '../../../public/Ecole_Centrale_Supelec.svg' ; 
-import centraleLogo from '../../../public/Ecole_Centrale_Supelec.svg' ; 
+
 
 function Home() {
   const [optionFiltrage, setOptionFiltrage] = useState("vote-average");
