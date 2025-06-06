@@ -6,12 +6,12 @@ function Movie({ movie }) {
     ? `https://image.tmdb.org/t/p/w200${movie.poster_path}`
     : 'https://via.placeholder.com/200x300?text=No+Image';
 
-  // Genre (affiche les ids ou les noms si disponibles)
+  
   const genres = movie.genres
     ? movie.genres.map(g => g.name).join(', ')
     : (movie.genre_ids ? movie.genre_ids.join(', ') : 'Genre inconnu');
 
-  // Début du synopsis
+  
   const synopsis = movie.synopsis
     ? movie.synopsis
     : 'Pas de synopsis.';

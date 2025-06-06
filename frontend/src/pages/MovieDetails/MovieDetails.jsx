@@ -19,7 +19,7 @@ function MovieDetails() {
 
   useEffect(() => {
     fetchUserNote();
-    // eslint-disable-next-line
+    
   }, []);
 
   async function fetchUserNote() {
@@ -74,7 +74,7 @@ function MovieDetails() {
 
   useEffect(() => {
     fetchUserNote();
-    // eslint-disable-next-line
+    
   }, [id]);
 
   // --- Films similaires ---
@@ -89,7 +89,7 @@ function MovieDetails() {
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/movies/recommandation_content/${id}`)
       .then((res) => {
-        setSimilarMovies(res.data.movies || []); // <-- récupère bien le tableau
+        setSimilarMovies(res.data.movies || []); 
         setErrorSimilar(null);
       })
       .catch(() => {

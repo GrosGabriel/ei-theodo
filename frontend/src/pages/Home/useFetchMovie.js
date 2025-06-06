@@ -29,7 +29,7 @@ export function useFetchMovies(optionFiltrage,setOptionFiltrage,savedEmail) {
         if (!userId) {
           console.error("Utilisateur non trouvé.");
           setOptionFiltrage("Les mieux notés");
-          return; // <-- On arrête ici, donc le filtre repasse à "Les mieux notés"
+          return; // On modifie pas l'optionFiltrage ici pour éviter de faire un fetch avec l'ancien filtre
         } else {
           url = `http://localhost:8000/movies/revoir/${userId}`;
         }
@@ -45,7 +45,7 @@ export function useFetchMovies(optionFiltrage,setOptionFiltrage,savedEmail) {
         if (!userId) {
           console.error("Utilisateur non trouvé.");
           setOptionFiltrage("Les mieux notés");
-          return; // <-- On arrête ici aussi
+          return; 
         } else {
           url = `http://localhost:8000/movies/recommandation_content_user/${userId}`;
         }
@@ -62,7 +62,7 @@ export function useFetchMovies(optionFiltrage,setOptionFiltrage,savedEmail) {
         if (!userId) {
           console.error("Utilisateur non trouvé.");
           setOptionFiltrage("Les mieux notés");
-          return; // <-- Empêche le fetch avec l'ancien filtre
+          return;
         } else {
           url = `http://localhost:8000/movies/recommandation/${userId}`;
         }

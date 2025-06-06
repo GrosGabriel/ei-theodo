@@ -33,7 +33,7 @@ useEffect(() => {
 
 
 
-//Optionn de filtrage en fonction de celle qu'on choisit sur me menu 
+//Option de filtrage en fonction de celle qu'on choisit sur me menu 
 
   function getFiltreLabel(optionFiltrage) {
     if (optionFiltrage === "Les mieux notés") return "Les mieux notés";
@@ -157,7 +157,7 @@ useEffect(() => {
                   <Movie movie={movie} />
                 </li>
               ))}
-              {/* Ajoute des placeholders pour compléter la ligne */}
+         
               {Array.from({ length: placeholders }).map((_, idx) => (
                 <li key={`placeholder-${idx}`} className="movie-placeholder" />
               ))}
