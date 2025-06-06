@@ -216,10 +216,8 @@ def recommandations(userid):
 
 
 # Pondération des caract
-poids_genre = 2.0  
-poids_synopsis = 1.0   
-poids_real = 0.5  
-def recommandation_content(movie_id, poids_genre=2.0, poids_synopsis=1.0, poids_real=0.5):
+
+def recommandation_content(movie_id, poids_genre=2.0, poids_synopsis=1.0, poids_real=10):
     """
     Recommande des films similaires à partir d'un film donné en utilisant la similarité cosinus sur les synopsis, genres et réalisateurs.
     """
@@ -330,10 +328,17 @@ def recommandation_content_user(userid, poids_genre=2.0, poids_synopsis=1.0, poi
     return recommended_movies
 
 
+
+
 @app.route('/movies/recommandation_content/<int:movieid>')
 def recommandation_content_get(movieid):
     res = recommandation_content(movieid)
     return res
+
+
+
+
+
 
 
 if __name__ == "__main__":
