@@ -95,6 +95,18 @@ router.get('/vote-average', function (req, res) {
       res.status(500).json({ message: 'Error while fetching popular movies' });
     });
 });
+
+
+router.get('/recommandation_content/:movieid', async function (req, res) { // <--- AJOUTE async ICI
+  try {
+    const response = await axios.get(`http://localhost:5000/movies/recommandation_content/${req.params.movieid}`);
+    res.json({movies: response.data});
+  } catch (error) {
+    res.status(500).json({ message: 'Error while fetching similar movies' });
+  }
+});
+
+
 router.get('/recommandation/:userid', async function (req, res) { // <--- AJOUTE async ICI
   try {
     const response = await axios.get(`http://localhost:5000/movies/recommandation/${req.params.userid}`);
