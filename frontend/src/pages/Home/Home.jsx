@@ -7,16 +7,14 @@ import { useNavigate } from 'react-router-dom';
 import centraleLogo from '../../../public/Ecole_Centrale_Supelec.svg' ; 
 
 function Home() {
+  
   const [optionFiltrage, setOptionFiltrage] = useState("vote-average");
-
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [savedEmail, setSavedEmail] = useState('');
-  const [messageco, setmessageco] = useState('');
+  const [email, setEmail] = useState(''); //variable temporaire pour l'email 
+  const [savedEmail, setSavedEmail] = useState(''); //variable qui stocke l'email quand valider est clique 
+  const [messageco, setmessageco] = useState(''); //message qui s'affiche quand on clique sur valider
 
-
-
-  useEffect(() => {     
+useEffect(() => {     
     const emailFromStorage = localStorage.getItem('savedEmail');
     if (emailFromStorage) {
       setSavedEmail(emailFromStorage);
@@ -25,7 +23,6 @@ function Home() {
   }, []);
 
   const { movieName, setMovieName, filteredMovies, setMovies } = useFetchMovies(optionFiltrage,setOptionFiltrage,savedEmail) ;
-
   const columns = 5;
 
   const placeholders =
@@ -35,6 +32,7 @@ function Home() {
 
 
 
+//Optionn de filtrage en fonction de celle qu'on choisit sur me menu 
 
   function getFiltreLabel(optionFiltrage) {
     if (optionFiltrage === "vote-average") return "Vote Average";
@@ -47,28 +45,25 @@ function Home() {
 
   return (
     <div className="App">
-      
-   
       <header className="App-header">
         <h1 className = 'page-title'> A la recherche de votre prochain coup de coeur ?</h1>
-        
-              <div className="search-bar">
-          <input
-            type="text"
-            placeholder="Rechercher un film..."
-            className="search-input"
-            value={movieName}
-            onChange={e => setMovieName(e.target.value)}
-          />
-          <div className="dropdown-menu">
-            <button className="dropdown-btn">
-              {getFiltreLabel(optionFiltrage)}
-              <span className="dropdown-arrow" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 20 20" fill="#888" style={{display: 'block'}}>
+          <div className="search-bar">
+            <input
+              type="text"
+              placeholder="Rechercher un film..."
+              className="search-input"
+              value={movieName}
+              onChange={e => setMovieName(e.target.value)}
+            />
+            <div className="dropdown-menu">
+              <button className="dropdown-btn">
+                {getFiltreLabel(optionFiltrage)}
+                <span className="dropdown-arrow" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 20 20" fill="#888" style={{display: 'block'}}>
                   <path d="M5 8l5 5 5-5" stroke="#888" strokeWidth="2" fill="none" strokeLinecap="round"/>
-                </svg>
+                  </svg>
               </span>
-            </button>
+              </button>
             <div className="dropdown-content">
               <a href="#vote-average" onClick={()=>setOptionFiltrage("vote-average")}>Vote Average</a>
               <a href="#release-date" onClick={()=>setOptionFiltrage("release-date")}>Release Date</a>
@@ -76,12 +71,9 @@ function Home() {
               <a href="#recommandation" onClick={()=>setOptionFiltrage("recommandation")}>Recommandation</a>
               <a href="#revoir" onClick={()=>setOptionFiltrage("revoir")}>Revoir</a>
             </div>
+            </div>
           </div>
-       
-       
-        </div>
-
-        <div className="remarque-col">
+      <div className="remarque-col">
         <span className="remarque">
           Recommandations classées par {optionFiltrage}
         </span>
@@ -96,40 +88,40 @@ function Home() {
           )}
         </div>
         <div className="connection">
-  <input
-    type="text"
-    placeholder="Entrer votre email"
-    className="email-input"
-    value={email}
-    onChange={e => setEmail(e.target.value)}
-  />
-  <button
-    className="validate-btn"
-    onClick={async () => {
-     
-      try {
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/search?email=${email}`);
-        if (res.data && res.data.users && res.data.users.length > 0) {
-          setSavedEmail(email);
-          localStorage.setItem('savedEmail', email);
-          setEmail('');
-          setmessageco("Vous êtes connecté.e en tant que ");
-        } else {
-          setSavedEmail(''); 
-          localStorage.removeItem('savedEmail'); 
-          setmessageco("Cet email n'existe pas. Veuillez créer un compte.");
-        }
-      } catch (err) {
-        setmessageco("Erreur lors de la vérification de l'email.");
-      }
-    }}
-  >
-    Valider
-  </button>
-  
-</div>
+          <input
+          type="text"
+          placeholder="Entrer votre email"
+          className="email-input"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          />
+          <button
+            className="validate-btn"
+            onClick={async () => {
+            
+              try {
+                const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/search?email=${email}`);
+                if (res.data && res.data.users && res.data.users.length > 0) {
+                  setSavedEmail(email);
+                  localStorage.setItem('savedEmail', email);
+                  setEmail('');
+                  setmessageco("Vous êtes connecté.e en tant que ");
+                } else {
+                  setSavedEmail(''); 
+                  localStorage.removeItem('savedEmail'); 
+                  setmessageco("Cet email n'existe pas. Veuillez créer un compte.");
+                }
+              } catch (err) {
+                setmessageco("Erreur lors de la vérification de l'email.");
+              }
+            }}
+          >
+            Valider
+          </button>
+          
+        </div>
        <div className='message-co'>
-    {messageco}   {savedEmail} </div> 
+        {messageco}   {savedEmail} </div> 
 
        
       </header>
