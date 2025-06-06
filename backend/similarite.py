@@ -268,6 +268,10 @@ def recommandation_content(movie_id, poids_genre=2.0, poids_synopsis=1.0, poids_
 
     return recommended_movies
 
+@app.route('/movies/recommandation_content/<int:movieid>')
+def recommandations_content_get(movieid):
+    res = recommandation_content(movieid)
+    return res
 
 
 if __name__ == "__main__":
