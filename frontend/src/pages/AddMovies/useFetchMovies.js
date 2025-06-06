@@ -19,7 +19,7 @@ export function useFetchMovies() {
       });
   };
 
-  // fetch movies on component mount
+  
   useEffect(() => {
     fetchMovies();
   }, []);

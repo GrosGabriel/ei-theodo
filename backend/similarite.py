@@ -302,8 +302,7 @@ def recommandation_content_user(userid, poids_genre=2.0, poids_synopsis=1.0, poi
         poids_synopsis * synopsis_matrix.toarray()
     ])
 
-    
-    # on construi le "profil" utilisateur pondéré par la note
+    # Construction du "profil utilisateur" pondéré par la note
     movie_ids = [int(mid) for mid in movie_ids]
     movies_ids_all = [int(m['id']) for m in movies]
     user_indices = [i for i, mid in enumerate(movies_ids_all) if mid in movie_ids]
@@ -313,6 +312,19 @@ def recommandation_content_user(userid, poids_genre=2.0, poids_synopsis=1.0, poi
     user_notes = [note_dict[movies_ids_all[i]] for i in user_indices]
     user_vectors = X[user_indices]
     print(user_notes)
+    if sum(user_notes) == 0:
+        return []
+    user_profile = np.average(user_vectors, axis=0, weights=user_notes)
+
+    user_indices = [i for i, m in enumerate(movies) if m['id'] in movie_ids]
+    user_notes = []
+    for mid in movie_ids:
+        idx = next((i for i, m in enumerate(movies) if m['id'] == mid), None)
+        if idx is not None:
+            user_notes.append(notes[movie_ids.index(mid)])
+    user_vectors = X[user_indices]
+    print("on est la")
+    print (user_notes)
     if sum(user_notes) == 0:
         return []
     user_profile = np.average(user_vectors, axis=0, weights=user_notes)

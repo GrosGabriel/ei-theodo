@@ -1,15 +1,9 @@
 import express from 'express';
 import { appDataSource } from '../datasource.js';
 import Movie from '../entities/movie.js';
-import axios from 'axios'; // Mets bien cette ligne en haut, avec des guillemets
+import axios from 'axios'; 
 
-// const axios = require('axios').default ; // Import axios for making HTTP requests
 const router = express.Router();
-
-// router.get('/', function (req, res) {
-//   console.log('GET /movies called');
-//   res.json([]);
-// });
 
 router.get('/', function (req, res) {
   appDataSource
@@ -171,7 +165,6 @@ router.get('/revoir/:userid', async function (req, res) {
 
 router.post('/new', function (req, res) {
   console.log(req.body);
-  // res.json(req.body);
   const movieRepository = appDataSource.getRepository(Movie);
   const newMovie = movieRepository.create({
     title: req.body.title,
@@ -185,7 +178,6 @@ router.post('/new', function (req, res) {
     .then(function(savedMovie) {
       res.status(201).json({
         message: 'Movie successfully created',
-        // id: savedMovie.identifiers[0].id, // Assuming the ID is returned in the identifiers array
       });
     })
 

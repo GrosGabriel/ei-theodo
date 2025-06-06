@@ -21,6 +21,7 @@ npm run migration:run
 ```
 npm run dev
 ```
+Open http://localhost:3000/
 
 ### Start for production
 
@@ -59,4 +60,11 @@ npm run build
 
 ```
 npm run lint
+```
+
+## API Recommandation
+
+```
+cd backend
+python similarite.py
 ```

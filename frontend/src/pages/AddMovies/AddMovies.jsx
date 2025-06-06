@@ -7,7 +7,6 @@ import { useFetchMovies } from './useFetchMovies';
 function Movies() {
   const { movies, moviesLoadingError, fetchMovies } = useFetchMovies();
 
-  // Ajoute un état pour les filtres
   const [filters, setFilters] = useState({
     title: '',
     release_date: '',
