@@ -5,7 +5,7 @@ import Movie from "../entities/movie.js";
 
 export const appDataSource = new DataSource({
   type: "sqlite",
-  database: "../database.sqlite3", // <-- doit être une string
+  database: "../database.sqlite3",
   entities: [User, Note, Movie],
   synchronize: false,
   logging: false,
@@ -35,7 +35,7 @@ async function fillUsersAndNotes() {
     }
   }
 
-  // 2. Ajout des notes pour chaque groupe sur les films du même genre
+  // 2. Ajout des notes à 5 pour le genre préféré
   for (let group = 0; group < 5; group++) {
     const genre = genres[group];
     // On cherche les films dont le genre contient le mot clé (pour gérer les genres multiples)
@@ -51,12 +51,38 @@ async function fillUsersAndNotes() {
           filmid: movie.id,
           note: 5, // Like
         });
-        await noteRepo.save(note);
+        const existing = await noteRepo.findOneBy({ userid: userId, filmid: movie.id });
+        if (!existing) {
+          await noteRepo.save(note);
+        }
       }
     }
   }
 
-  console.log('Utilisateurs et notes insérés !');
+  // 3. Ajout des notes à 0 pour un autre genre (genre suivant dans la liste, circulaire)
+  for (let group = 0; group < 5; group++) {
+    const zeroGenre = genres[(group + 1) % genres.length];
+    const movies = await movieRepo
+      .createQueryBuilder("movie")
+      .where("movie.genre LIKE :genre", { genre: `%${zeroGenre}%` })
+      .getMany();
+    for (let i = 0; i < 5; i++) {
+      const userId = userIds[group * 5 + i];
+      for (const movie of movies) {
+        const note = noteRepo.create({
+          userid: userId,
+          filmid: movie.id,
+          note: 0, // Dislike
+        });
+        const existing = await noteRepo.findOneBy({ userid: userId, filmid: movie.id });
+        if (!existing) {
+          await noteRepo.save(note);
+        }
+      }
+    }
+  }
+
+  console.log('Utilisateurs et notes insérés (notes 5 et 0) !');
   process.exit(0);
 }
 
