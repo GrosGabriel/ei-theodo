@@ -82,5 +82,29 @@
   color: #ffd700;
   filter: grayscale(0) brightness(1.15) drop-shadow(0 0 6px #ffd70088);
 }
+.similar-movies-btn {
+  background: #181818;
+  color: #ffd700;
+  border: 1px solid #ffd70055;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: border 0.2s, background 0.2s, color 0.2s;
+}
+.similar-movies-btn:hover {
+  border: 1.5px solid #ffd700;
+  background: #23232b;
+  color: #fffbe0;
+}
+.similar-movies-list {
+  margin-top: 10px;
+  text-align: left;
+}
+.similar-movies-list ul {
+  padding-left: 18px;
+}
 
 

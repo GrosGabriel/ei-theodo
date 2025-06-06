@@ -53,6 +53,7 @@ function MovieDetails() {
     fetchUserNote();
   }
 
+  
   async function deleteNote() {
     const email = localStorage.getItem('savedEmail');
     if (!email) return;
@@ -73,7 +74,38 @@ useEffect(() => {
     // eslint-disable-next-line
   }, [id]);
 
-  
+  const [showSimilar, setShowSimilar] = useState(false);
+const [similarMovies, setSimilarMovies] = useState([]);
+const [loadingSimilar, setLoadingSimilar] = useState(false);
+const [errorSimilar, setErrorSimilar] = useState(null);
+
+useEffect(() => {
+  if (!showSimilar) return;
+  setLoadingSimilar(true);
+  axios
+    .get(`${import.meta.env.VITE_BACKEND_URL}/movies/${id}/similar`)
+    .then((res) => {
+      setSimilarMovies(res.data);
+      setErrorSimilar(null);
+    })
+    .catch((err) => {
+      setErrorSimilar("Erreur lors du chargement des films similaires.");
+      setSimilarMovies([]);
+    })
+    .finally(() => setLoadingSimilar(false));
+}, [showSimilar, id]);
+
+  async function fetchSimilarMovies() {
+    setLoadingSimilar(true);
+    setErrorSimilar(null);
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/movies/recommandation_content/${id}`);
+      setSimilarMovies(res.data);
+    } catch (e) {
+      setErrorSimilar("Erreur lors du chargement des films similaires.");
+    }
+    setLoadingSimilar(false);
+  }
 
   if (!movie) return <div className="movie-details-container">Chargement...</div>;
 
@@ -123,6 +155,35 @@ return (
         ))}
       </div>
       Note attribuée {movieRating}/5
+      <button
+  className="similar-movies-btn"
+  onClick={() => {
+    if (!showSimilar) fetchSimilarMovies();
+    setShowSimilar((v) => !v);
+  }}
+  style={{ marginTop: 16, marginBottom: 8 }}
+>
+  {showSimilar ? "Masquer les films similaires" : "Films similaires"}
+</button>
+
+{showSimilar && (
+  <div className="similar-movies-list">
+    {loadingSimilar && <div>Chargement...</div>}
+    {errorSimilar && <div style={{ color: "red" }}>{errorSimilar}</div>}
+    {!loadingSimilar && !errorSimilar && similarMovies.length === 0 && (
+      <div>Aucun film similaire trouvé.</div>
+    )}
+    {!loadingSimilar && !errorSimilar && similarMovies.length > 0 && (
+      <ul>
+        {similarMovies.map((sim) => (
+          <li key={sim.id}>
+            <strong>{sim.title}</strong> {sim.release_date ? `(${sim.release_date})` : ""}
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+)}
     </div>
   );
 }
