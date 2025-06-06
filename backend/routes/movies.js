@@ -122,7 +122,22 @@ router.get('/:movieId', function (req, res) {
     });
 });
 
-
+router.get('/revoir/:userid', async function (req, res) {
+  const userid = req.params.userid;
+  try {
+    const movies = await appDataSource.query(
+      `SELECT m.*, n.note
+       FROM movie m
+       JOIN note n ON m.id = n.filmid
+       WHERE n.userid = ?
+       ORDER BY n.note DESC`,
+      [userid]
+    );
+    res.json({ movies });
+  } catch (error) {
+    res.status(500).json({ message: 'Error while fetching user rated movies' });
+  }
+});
 
 
 

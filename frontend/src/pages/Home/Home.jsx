@@ -8,12 +8,25 @@ import centraleLogo from '../../../public/Ecole_Centrale_Supelec.svg' ; // Assur
 
 function Home() {
   const [optionFiltrage, setOptionFiltrage] = useState("vote-average");
-  const { movieName, setMovieName, filteredMovies, setMovies } = useFetchMovies(optionFiltrage);
+
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [savedEmail, setSavedEmail] = useState('');
   const [messageco, setmessageco] = useState('');
-  // Nombre de colonnes dans la grille
+
+
+
+  useEffect(() => {     //a garder
+    const emailFromStorage = localStorage.getItem('savedEmail');
+    if (emailFromStorage) {
+      setSavedEmail(emailFromStorage);
+      setmessageco("Vous êtes connecté.e en tant que ");
+    }
+  }, []);
+
+  const { movieName, setMovieName, filteredMovies, setMovies } = useFetchMovies(optionFiltrage,setOptionFiltrage,savedEmail) ;
+
+    // Nombre de colonnes dans la grille
   const columns = 5;
   // Calcul du nombre de placeholders à ajouter pour compléter la dernière ligne
   const placeholders =
@@ -23,37 +36,12 @@ function Home() {
 
 
 
-  useEffect(() => {
-    const emailFromStorage = localStorage.getItem('savedEmail');
-    if (emailFromStorage) {
-      setSavedEmail(emailFromStorage);
-      setmessageco("Vous êtes connecté.e en tant que ");
-    }
-  }, []);
-
-  useEffect(() => {
-    let url = "";
-    if (optionFiltrage === "vote-average")
-      url = 'http://localhost:8000/movies/vote-average';
-    else if (optionFiltrage === "release-date")
-      url = 'http://localhost:8000/movies/release-date';
-    else
-      url = 'http://localhost:8000/movies/popularity';
-
-    axios
-      .get(url)
-      .then((response) => {
-        setMovies(response.data.movies);
-      })
-      .catch((error) => {
-        console.log('Erreur API:', error);
-      });
-  }, [optionFiltrage]);
 
   function getFiltreLabel(optionFiltrage) {
     if (optionFiltrage === "vote-average") return "Vote Average";
     if (optionFiltrage === "release-date") return "Release Date";
     if (optionFiltrage === "popularity") return "Popularity";
+    if (optionFiltrage === "recommandation") return "Recommandation";
     return "Filtres";
   }
 
@@ -85,6 +73,7 @@ function Home() {
               <a href="#vote-average" onClick={()=>setOptionFiltrage("vote-average")}>Vote Average</a>
               <a href="#release-date" onClick={()=>setOptionFiltrage("release-date")}>Release Date</a>
               <a href="#popularity" onClick={()=>setOptionFiltrage("popularity")}>Popularity</a>
+              <a href="#recommandation" onClick={()=>setOptionFiltrage("recommandation")}>Recommandation</a>
             </div>
           </div>
        
