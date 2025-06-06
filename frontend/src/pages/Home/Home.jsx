@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useFetchMovies } from './useFetchMovie';
 import Movie from '../../components/Movie/Movie';
 import { useNavigate } from 'react-router-dom';
-import centraleLogo from '../../../public/Ecole_Centrale_Supelec.svg' ; // Assurez-vous que le chemin d'importation est correct
+import centraleLogo from '../../../public/Ecole_Centrale_Supelec.svg' ; 
 
 function Home() {
   const [optionFiltrage, setOptionFiltrage] = useState("vote-average");
@@ -116,8 +116,8 @@ function Home() {
           setEmail('');
           setmessageco("Vous êtes connecté.e en tant que ");
         } else {
-          setSavedEmail(''); // <-- Ajoute ceci
-          localStorage.removeItem('savedEmail'); // <-- Optionnel, pour vider aussi le localStorage
+          setSavedEmail('');
+          localStorage.removeItem('savedEmail');
           setmessageco("Cet email n'existe pas. Veuillez créer un compte.");
         }
       } catch (err) {
@@ -127,7 +127,19 @@ function Home() {
   >
     Valider
   </button>
-  
+  {savedEmail && (
+    <button
+      className="logout-btn"
+      onClick={() => {
+        setSavedEmail('');
+        localStorage.removeItem('savedEmail');
+        setmessageco('');
+      }}
+      style={{ marginLeft: 8 }}
+    >
+      Se déconnecter
+    </button>
+  )}
 </div>
        <div className='message-co'>
     {messageco}   {savedEmail} </div> 

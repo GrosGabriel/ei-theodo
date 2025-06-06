@@ -104,7 +104,10 @@ def moy_notes(l1):
  
 
 def Pearson_correlation(user_id1,user_id2,dico):
-    """Fonction qui calcule la similarité entre deux utilisateurs en utilisant la corrélation de Pearson.
+    """
+    
+    Fonction qui calcule la similarité entre deux utilisateurs en utilisant la corrélation de Pearson.
+    
     """
 
     user_dict_1 = dico[user_id1]
