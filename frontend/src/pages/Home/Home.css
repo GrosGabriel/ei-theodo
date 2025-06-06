@@ -264,3 +264,22 @@ input[type="text"]:focus {
 .dropdown-menu:hover .dropdown-content {
   display: block;
 }
+
+.no-movie-message {
+  text-align: center;
+  color: #ffd700;
+  font-size: 1.2em;
+  margin: 40px auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px; /* pour bien centrer verticalement dans la liste */
+}
+
+.movie-list.empty {
+  min-height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

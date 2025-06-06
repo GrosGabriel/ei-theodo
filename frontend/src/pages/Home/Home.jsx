@@ -74,6 +74,7 @@ function Home() {
               <a href="#release-date" onClick={()=>setOptionFiltrage("release-date")}>Release Date</a>
               <a href="#popularity" onClick={()=>setOptionFiltrage("popularity")}>Popularity</a>
               <a href="#recommandation" onClick={()=>setOptionFiltrage("recommandation")}>Recommandation</a>
+              <a href="#revoir" onClick={()=>setOptionFiltrage("revoir")}>Revoir</a>
             </div>
           </div>
        
