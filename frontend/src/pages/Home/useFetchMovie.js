@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Home.css';
-import axios from 'axios'; // Assurez-vous d'importer axios
+import axios from 'axios'; 
 
 export function useFetchMovies(optionFiltrage,setOptionFiltrage,savedEmail) {
   const [movieName, setMovieName] = useState('');

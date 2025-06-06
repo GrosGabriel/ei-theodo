@@ -283,3 +283,25 @@ input[type="text"]:focus {
   justify-content: center;
   align-items: center;
 }
+
+.logout-btn {
+  background: #23232b !important;
+  color: #ffd700 !important;
+  border: 1px solid #ffd70055 !important;
+  border-radius: 8px !important;
+  padding: 10px 18px !important;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none !important;
+  min-width: 100px;
+  height: 40px;
+  margin-left: 8px;
+  transition: border 0.2s, background 0.2s, color 0.2s;
+}
+.logout-btn:hover,
+.logout-btn:focus {
+  border: 1.5px solid #ffd700 !important;
+  background: #181818 !important;
+  color: #fffbe0 !important;
+}

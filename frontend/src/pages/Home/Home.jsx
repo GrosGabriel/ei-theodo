@@ -6,6 +6,7 @@ import Movie from '../../components/Movie/Movie';
 import { useNavigate } from 'react-router-dom';
 import centraleLogo from '../../../public/Ecole_Centrale_Supelec.svg' ; 
 
+
 function Home() {
   
   const [optionFiltrage, setOptionFiltrage] = useState("vote-average");
@@ -88,38 +89,50 @@ useEffect(() => {
           )}
         </div>
         <div className="connection">
-          <input
-          type="text"
-          placeholder="Entrer votre email"
-          className="email-input"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          />
-          <button
-            className="validate-btn"
-            onClick={async () => {
-            
-              try {
-                const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/search?email=${email}`);
-                if (res.data && res.data.users && res.data.users.length > 0) {
-                  setSavedEmail(email);
-                  localStorage.setItem('savedEmail', email);
-                  setEmail('');
-                  setmessageco("Vous êtes connecté.e en tant que ");
-                } else {
-                  setSavedEmail(''); 
-                  localStorage.removeItem('savedEmail'); 
-                  setmessageco("Cet email n'existe pas. Veuillez créer un compte.");
-                }
-              } catch (err) {
-                setmessageco("Erreur lors de la vérification de l'email.");
-              }
-            }}
-          >
-            Valider
-          </button>
-          
-        </div>
+  <input
+    type="text"
+    placeholder="Entrer votre email"
+    className="email-input"
+    value={email}
+    onChange={e => setEmail(e.target.value)}
+  />
+  <button
+    className="validate-btn"
+    onClick={async () => {
+     
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/search?email=${email}`);
+        if (res.data && res.data.users && res.data.users.length > 0) {
+          setSavedEmail(email);
+          localStorage.setItem('savedEmail', email);
+          setEmail('');
+          setmessageco("Vous êtes connecté.e en tant que ");
+        } else {
+          setSavedEmail('');
+          localStorage.removeItem('savedEmail');
+          setmessageco("Cet email n'existe pas. Veuillez créer un compte.");
+        }
+      } catch (err) {
+        setmessageco("Erreur lors de la vérification de l'email.");
+      }
+    }}
+  >
+    Valider
+  </button>
+  {savedEmail && (
+    <button
+      className="logout-btn"
+      onClick={() => {
+        setSavedEmail('');
+        localStorage.removeItem('savedEmail');
+        setmessageco('');
+      }}
+      style={{ marginLeft: 8 }}
+    >
+      Se déconnecter
+    </button>
+  )}
+</div>
        <div className='message-co'>
         {messageco}   {savedEmail} </div> 
 
