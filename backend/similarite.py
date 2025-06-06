@@ -16,7 +16,6 @@ cursor = conn.cursor()
 
 
 #USER BASED
-
 def similarity_dict():
     """
     Récupère les notes des utilisateurs et les stocke dans un dictionnaire où la clé est l'ID de l'utilisateur et la valeur est un dictionnaire des films notés par cet utilisateur avec leurs notes.
@@ -40,7 +39,7 @@ def similarity_dict():
                 dico[user_id][movie_id] = valeur_note
     return dico
 
-#print(similarity_dict())
+
 
 def movie_info_dict():
     """
@@ -66,7 +65,6 @@ def movie_info_dict():
     return movie_dict
 
 dico_movie = movie_info_dict()
-#print(dico_movie[123])  # Affiche toutes les infos du film d'id 123
 
 def link_two_couple_lists(l1,l2):
     """
@@ -214,14 +212,11 @@ def recommandations(userid):
 
 #CONTENT BASED 
 
-
-# Pondération des caract
-
 def recommandation_content(movie_id, poids_genre=2.0, poids_synopsis=1.0, poids_real=10):
     """
     Recommande des films similaires à partir d'un film donné en utilisant la similarité cosinus sur les synopsis, genres et réalisateurs.
     """
-    # Récupération des informations du film
+    # Récupération des infos du film
     dico_movie = movie_info_dict()
     
     # Matrice de caractéristiques pour tous les films
@@ -307,14 +302,19 @@ def recommandation_content_user(userid, poids_genre=2.0, poids_synopsis=1.0, poi
         poids_synopsis * synopsis_matrix.toarray()
     ])
 
-    # Construction du "profil utilisateur" pondéré par la note
-    user_indices = [i for i, m in enumerate(movies) if m['id'] in movie_ids]
-    user_notes = []
-    for mid in movie_ids:
-        idx = next((i for i, m in enumerate(movies) if m['id'] == mid), None)
-        if idx is not None:
-            user_notes.append(notes[movie_ids.index(mid)])
+    
+    # on construi le "profil" utilisateur pondéré par la note
+    movie_ids = [int(mid) for mid in movie_ids]
+    movies_ids_all = [int(m['id']) for m in movies]
+    user_indices = [i for i, mid in enumerate(movies_ids_all) if mid in movie_ids]
+    # Associer chaque id de film à sa note
+    note_dict = dict(zip(movie_ids, notes))
+    # Récupérer les notes dans le même ordre que user_indices
+    user_notes = [note_dict[movies_ids_all[i]] for i in user_indices]
     user_vectors = X[user_indices]
+    print(user_notes)
+    if sum(user_notes) == 0:
+        return []
     user_profile = np.average(user_vectors, axis=0, weights=user_notes)
 
     # Calcul de la similarité cosinus entre le profil utilisateur et tous les films
@@ -322,7 +322,7 @@ def recommandation_content_user(userid, poids_genre=2.0, poids_synopsis=1.0, poi
 
     # On exclut les films déjà notés
     not_seen_indices = [i for i, m in enumerate(movies) if m['id'] not in movie_ids]
-    recommended_indices = sorted(not_seen_indices, key=lambda i: similarities[i], reverse=True)[:5]
+    recommended_indices = sorted(not_seen_indices, key=lambda i: similarities[i], reverse=True)[:12]
 
     recommended_movies = [movies[i] for i in recommended_indices]
     return recommended_movies
