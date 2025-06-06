@@ -11,11 +11,11 @@ export function useFetchMovies(optionFiltrage,setOptionFiltrage,savedEmail) {
     async function fetchMovies() {
       console.log({})
       let url = "";
-      if (optionFiltrage === "vote-average") {
+      if (optionFiltrage === "Les mieux notés") {
         url = 'http://localhost:8000/movies/vote-average';
-      } else if (optionFiltrage === "release-date") {
+      } else if (optionFiltrage === "Date de sortie") {
         url = 'http://localhost:8000/movies/release-date';
-      } else if (optionFiltrage === "popularity") {
+      } else if (optionFiltrage === "Les plus populaires") {
         url = 'http://localhost:8000/movies/popularity';
       } else if (optionFiltrage === "revoir") {
         async function getUserIdByEmail(email) {
@@ -28,8 +28,8 @@ export function useFetchMovies(optionFiltrage,setOptionFiltrage,savedEmail) {
         const userId = await getUserIdByEmail(savedEmail);
         if (!userId) {
           console.error("Utilisateur non trouvé.");
-          setOptionFiltrage("popularity");
-          url = 'http://localhost:8000/movies/popularity';
+          setOptionFiltrage("Les mieux notés");
+          return; // <-- On arrête ici, donc le filtre repasse à "Les mieux notés"
         } else {
           url = `http://localhost:8000/movies/revoir/${userId}`;
         }
@@ -44,8 +44,8 @@ export function useFetchMovies(optionFiltrage,setOptionFiltrage,savedEmail) {
         const userId = await getUserIdByEmail(savedEmail);
         if (!userId) {
           console.error("Utilisateur non trouvé.");
-          setOptionFiltrage("popularity");
-          url = 'http://localhost:8000/movies/popularity';
+          setOptionFiltrage("Les mieux notés");
+          return; // <-- On arrête ici aussi
         } else {
           url = `http://localhost:8000/movies/recommandation_content_user/${userId}`;
         }
@@ -61,8 +61,8 @@ export function useFetchMovies(optionFiltrage,setOptionFiltrage,savedEmail) {
         const userId = await getUserIdByEmail(savedEmail);
         if (!userId) {
           console.error("Utilisateur non trouvé.");
-          setOptionFiltrage("popularity");
-          url = 'http://localhost:8000/movies/popularity';
+          setOptionFiltrage("Les mieux notés");
+          return; // <-- Empêche le fetch avec l'ancien filtre
         } else {
           url = `http://localhost:8000/movies/recommandation/${userId}`;
         }

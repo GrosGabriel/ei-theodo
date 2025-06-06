@@ -9,7 +9,7 @@ import centraleLogo from '../../../public/Ecole_Centrale_Supelec.svg' ;
 
 function Home() {
   
-  const [optionFiltrage, setOptionFiltrage] = useState("vote-average");
+  const [optionFiltrage, setOptionFiltrage] = useState("Les mieux notés");
   const navigate = useNavigate();
   const [email, setEmail] = useState(''); //variable temporaire pour l'email 
   const [savedEmail, setSavedEmail] = useState(''); //variable qui stocke l'email quand valider est clique 
@@ -36,10 +36,10 @@ useEffect(() => {
 //Optionn de filtrage en fonction de celle qu'on choisit sur me menu 
 
   function getFiltreLabel(optionFiltrage) {
-    if (optionFiltrage === "vote-average") return "Vote Average";
-    if (optionFiltrage === "release-date") return "Release Date";
-    if (optionFiltrage === "popularity") return "Popularity";
-    if (optionFiltrage === "recommandation") return "Recommandation";
+    if (optionFiltrage === "Les mieux notés") return "Les mieux notés";
+    if (optionFiltrage === "Date de sortie") return "Date de sortie";
+    if (optionFiltrage === "Les plus populaires") return "Les plus populaires";
+    if (optionFiltrage === "D'autres ont aimé") return "D'autres ont aimé";
     if (optionFiltrage === "revoir") return "Revoir";
     if (optionFiltrage === "Basé sur vos gouts") return "Basé sur vos gouts";
     return "Filtres";
@@ -67,10 +67,10 @@ useEffect(() => {
               </span>
               </button>
             <div className="dropdown-content">
-              <a href="#vote-average" onClick={()=>setOptionFiltrage("vote-average")}>Vote Average</a>
-              <a href="#release-date" onClick={()=>setOptionFiltrage("release-date")}>Release Date</a>
-              <a href="#popularity" onClick={()=>setOptionFiltrage("popularity")}>Popularity</a>
-              <a href="#recommandation" onClick={()=>setOptionFiltrage("recommandation")}>Recommandation</a>
+              <a href="#Les mieux notés" onClick={()=>setOptionFiltrage("Les mieux notés")}>Les mieux notés</a>
+              <a href="#Date de sortie" onClick={()=>setOptionFiltrage("Date de sortie")}>Date de sortie</a>
+              <a href="#Les plus populaires" onClick={()=>setOptionFiltrage("Les plus populaires")}>Les plus populaires</a>
+              <a href="#D'autres ont aimé" onClick={()=>setOptionFiltrage("D'autres ont aimé")}>D'autres ont aimé</a>
               <a href="#Basé sur vos gouts" onClick={()=>setOptionFiltrage("Basé sur vos gouts")}>Basé sur vos gouts</a>
               <a href="#revoir" onClick={()=>setOptionFiltrage("revoir")}>Revoir</a>
             </div>
@@ -80,10 +80,10 @@ useEffect(() => {
         <span className="remarque">
           Recommandations classées par {optionFiltrage}
         </span>
-        {optionFiltrage !== "vote-average" && (
+        {optionFiltrage !== "Les mieux notés" && (
           <button
             className="close-btn"
-            onClick={() => setOptionFiltrage("vote-average")}
+            onClick={() => setOptionFiltrage("Les mieux notés")}
             title="Réinitialiser le filtre"
           >
             &times;
