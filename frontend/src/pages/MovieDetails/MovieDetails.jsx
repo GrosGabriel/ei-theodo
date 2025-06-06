@@ -83,7 +83,7 @@ useEffect(() => {
   if (!showSimilar) return;
   setLoadingSimilar(true);
   axios
-    .get(`${import.meta.env.VITE_BACKEND_URL}/movies/${id}/similar`)
+    .get(`${import.meta.env.VITE_BACKEND_URL}/movies/recommandation_content/${id}`)
     .then((res) => {
       setSimilarMovies(res.data);
       setErrorSimilar(null);
