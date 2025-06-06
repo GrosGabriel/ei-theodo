@@ -222,7 +222,7 @@ def recommandation_content(movie_id, poids_genre=2.0, poids_synopsis=1.0, poids_
     Recommande des films similaires à partir d'un film donné en utilisant la similarité cosinus sur les synopsis, genres et réalisateurs.
     """
     # Récupération des informations du film
-    movie = movie_info_dict()
+    dico_movie = movie_info_dict()
     
     # Matrice de caractéristiques pour tous les films
     movies = list(dico_movie.values())
@@ -265,11 +265,71 @@ def recommandation_content(movie_id, poids_genre=2.0, poids_synopsis=1.0, poids_
     recommended_indices = similarities.argsort()[::-1][1:6]
     
     recommended_movies = [movies[i] for i in recommended_indices]
-
     return recommended_movies
 
+def recommandation_content_user(userid, poids_genre=2.0, poids_synopsis=1.0, poids_real=0.5):
+    """
+    Recommande des films similaires à partir de tous les films notés par l'utilisateur,
+    en pondérant chaque film par la note donnée.
+    """
+    # Récupère tous les films notés et leurs notes
+    cursor.execute("SELECT filmid, note FROM note WHERE userid = ?", (userid,))
+    results = cursor.fetchall()
+    if not results:
+        return []
+
+    movie_ids = [row[0] for row in results]
+    notes = [row[1] for row in results]
+
+    dico_movie = movie_info_dict()
+    movies = list(dico_movie.values())
+
+    # Matrice tf-idf des synopsis 
+    tfidf = TfidfVectorizer(stop_words='english')
+    synopsis_matrix = tfidf.fit_transform([m['synopsis'] or '' for m in movies])
+
+    # Vecteur du genre zéro ou un 
+    mlb = MultiLabelBinarizer()
+    genre_matrix = mlb.fit_transform([m['genre'].split(',') if m['genre'] else [] for m in movies])
+
+    # Vecteur du réalisateur : zéro ou un 
+    directors = list(set(m['director'] for m in movies if m['director']))
+    director_map = {d: i for i, d in enumerate(directors)}
+    director_matrix = np.zeros((len(movies), len(directors)))
+    for idx, m in enumerate(movies):
+        if m['director'] in director_map:
+            director_matrix[idx, director_map[m['director']]] = 1
+
+    # Concaténation pondérée
+    X = np.hstack([
+        poids_genre * genre_matrix,
+        poids_real * director_matrix,
+        poids_synopsis * synopsis_matrix.toarray()
+    ])
+
+    # Construction du "profil utilisateur" pondéré par la note
+    user_indices = [i for i, m in enumerate(movies) if m['id'] in movie_ids]
+    user_notes = []
+    for mid in movie_ids:
+        idx = next((i for i, m in enumerate(movies) if m['id'] == mid), None)
+        if idx is not None:
+            user_notes.append(notes[movie_ids.index(mid)])
+    user_vectors = X[user_indices]
+    user_profile = np.average(user_vectors, axis=0, weights=user_notes)
+
+    # Calcul de la similarité cosinus entre le profil utilisateur et tous les films
+    similarities = cosine_similarity([user_profile], X)[0]
+
+    # On exclut les films déjà notés
+    not_seen_indices = [i for i, m in enumerate(movies) if m['id'] not in movie_ids]
+    recommended_indices = sorted(not_seen_indices, key=lambda i: similarities[i], reverse=True)[:5]
+
+    recommended_movies = [movies[i] for i in recommended_indices]
+    return recommended_movies
+
+
 @app.route('/movies/recommandation_content/<int:movieid>')
-def recommandations_content_get(movieid):
+def recommandation_content_get(movieid):
     res = recommandation_content(movieid)
     return res
 
